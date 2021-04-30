@@ -1,5 +1,7 @@
 package com.mindia.almacen.manager;
 
+import java.util.List;
+
 import com.mindia.almacen.model.Area;
 import com.mindia.almacen.model.Rol;
 import com.mindia.almacen.model.Usuario;
@@ -8,6 +10,10 @@ import com.mindia.almacen.persistence.RolDB;
 import com.mindia.almacen.persistence.UsuarioDB;
 
 public class UsuarioManager {
+	
+	public static List<Usuario> obtenerUsuariosActivos() {
+		return UsuarioDB.getUsersActivos();
+	}
 
 	public static void createUsuario(String username, String rol, String area, String nombre, String apellido,
 			String email) {
