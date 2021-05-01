@@ -2,6 +2,7 @@ package com.mindia.almacen.manager;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.mindia.almacen.model.Pedido;
 import com.mindia.almacen.persistence.ArticuloPedidoDB;
@@ -11,6 +12,10 @@ import com.mindia.almacen.persistence.UsuarioDB;
 
 
 public class PedidoManager {
+	
+	public static List<Pedido> getAllPedidos(){
+		return PedidoDB.getPedidosCompleto();
+	}
 
 	public static int createPedido(String obser, String user, String arts, String cants) {
 		Pedido pedido = new Pedido();
