@@ -2,17 +2,42 @@ package com.mindia.almacen.manager;
 
 import java.util.List;
 
+import com.mindia.almacen.JWTAuthorizationFilter;
 import com.mindia.almacen.model.Area;
 import com.mindia.almacen.model.Rol;
 import com.mindia.almacen.model.Usuario;
 import com.mindia.almacen.persistence.AreaDB;
 import com.mindia.almacen.persistence.RolDB;
 import com.mindia.almacen.persistence.UsuarioDB;
+import com.mindia.almacen.pojo.LoggedUser;
+
+import io.jsonwebtoken.Claims;
 
 public class UsuarioManager {
 	
 	public static List<Usuario> obtenerUsuariosActivos() {
 		return UsuarioDB.getUsersActivos();
+	}
+	
+	public static LoggedUser getLoggedUser(String token) {
+		String prefix = "Bearer ";
+		token = token.replace(prefix, "");
+		
+		Claims claims = JWTAuthorizationFilter.validateToken(token);
+		
+		String userName = claims.getSubject();
+		
+		Usuario usuario = UsuarioDB.getUsuarioByNombreUsuario(userName);
+		
+		LoggedUser loggedUser = new LoggedUser();
+		loggedUser.setApellido(usuario.getApellido());
+		loggedUser.setEmail(usuario.getEmail());
+		loggedUser.setEsAdmin(usuario.getRol().getRolId() > 1);
+		loggedUser.setNombre(usuario.getNombre());
+		loggedUser.setNombreUsuario(usuario.getNombreUsuario());
+		loggedUser.setRol(usuario.getRol().getNombreRol());
+		
+		return loggedUser;
 	}
 
 	public static void createUsuario(String username, String rol, String area, String nombre, String apellido,

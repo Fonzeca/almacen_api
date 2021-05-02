@@ -63,11 +63,31 @@ public class ArticuloDB {
 			Hibernate.initialize(articulo.getProveedor());
 			Hibernate.initialize(articulo.getSubcategoria());
 			Hibernate.initialize(articulo.getSubcategoria().getCategoria());
+			Hibernate.initialize(articulo.getEstadoarticulo());
 
 			return articulo;
 
 		} finally {
 
+			sess.close();
+		}
+	}
+	
+	public static List<Articulo> getArticulosLikeNombre(String nombre){
+		Session sess = null;
+		List<Articulo> articulos = null;
+		try {
+			sess = HibernateUtils.openSession();
+			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.articuloId != null and a.nombre LIKE '%" + nombre +"%'");
+			articulos = query.getResultList();
+			for (Articulo ar : articulos) {
+				Hibernate.initialize(ar.getSubcategoria());
+				Hibernate.initialize(ar.getSubcategoria().getCategoria());
+				Hibernate.initialize(ar.getEstadoarticulo());
+				Hibernate.initialize(ar.getProveedor());
+			}
+			return articulos;
+		} finally {
 			sess.close();
 		}
 	}

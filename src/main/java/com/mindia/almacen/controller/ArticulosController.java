@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mindia.almacen.manager.ArticuloManager;
@@ -14,7 +15,7 @@ import com.mindia.almacen.pojo.ArticuloView;
 @RestController
 public class ArticulosController {
 	
-	@GetMapping("/articulos")
+	@GetMapping("/articulo")
 	public List<ArticuloView> getAllArticulos() {
 		List<ArticuloView> response = new ArrayList<ArticuloView>();
 		
@@ -30,5 +31,24 @@ public class ArticulosController {
 		}
 		
 		return response;
+	}
+	
+	@GetMapping("/articulo/{nombre}")
+	public ArticuloView getArticuloByName(@PathVariable("nombre") String nombre) {
+		ArticuloView articuloView = new ArticuloView();
+		
+		Articulo articulo = ArticuloManager.getArticuloByName(nombre);
+		articuloView.setEstado(articulo.getEstadoarticulo().getNombreEstado());
+		articuloView.setNombre(articulo.getNombre());
+		articuloView.setQr(articulo.getCodigoQr());
+		articuloView.setStock(articulo.getStock());
+		articuloView.setSubcategoria(articulo.getSubcategoria().getSubNombre());
+		
+		return articuloView;
+	}
+	
+	@GetMapping("/articulo/like/{nombre}")
+	public List<ArticuloView> getArticuloLikeName(@PathVariable("nombre") String nombre) {
+		return ArticuloManager.getArticulosLikeName(nombre);
 	}
 }

@@ -22,18 +22,19 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
-	private final String HEADER = "Authorization";
-	private final String PREFIX = "Bearer ";
+	private final static String HEADER = "Authorization";
+	private final static String PREFIX = "Bearer ";
 	
 	//TODO: Dejar solo un Secret 
-	private final String SECRET = "Huffm4n";
+	private static final String SECRET = "Huffm4n";
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		try {
 			if (existeJWTToken(request, response)) {
-				Claims claims = validateToken(request);
+				String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
+				Claims claims = validateToken(jwtToken);
 				if (claims.get("authorities") != null) {
 					setUpSpringAuthentication(claims);
 				} else {
@@ -50,8 +51,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		}
 	}
 
-	private Claims validateToken(HttpServletRequest request) {
-		String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
+	public static Claims validateToken(String jwtToken) {
 		return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
 	}
 

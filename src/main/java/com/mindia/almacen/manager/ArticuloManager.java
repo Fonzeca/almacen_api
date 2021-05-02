@@ -1,5 +1,6 @@
 package com.mindia.almacen.manager;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,11 +11,37 @@ import com.mindia.almacen.persistence.ArticuloDB;
 import com.mindia.almacen.persistence.EstadoArticuloDB;
 import com.mindia.almacen.persistence.ProveedoresDB;
 import com.mindia.almacen.persistence.SubcategoriaDB;
+import com.mindia.almacen.pojo.ArticuloView;
 
 public class ArticuloManager {
 	
 	public static List<Articulo> getAllArticulos() {
 		return ArticuloDB.getListadoArticulos();
+	}
+	
+	public static Articulo getArticuloByName(String nombre) {
+		return ArticuloDB.getArticuloByNombre(nombre);
+	}
+	
+	public static List<ArticuloView> getArticulosLikeName(String nombre) {
+		if(nombre.length() < 3) {
+			return null;
+		}
+		
+		List<ArticuloView> response = new ArrayList<ArticuloView>();
+		
+		for(Articulo art : ArticuloDB.getArticulosLikeNombre(nombre)) {
+			ArticuloView articulo = new ArticuloView();
+			
+			articulo.setEstado(art.getEstadoarticulo().getNombreEstado());
+			articulo.setNombre(art.getNombre());
+			articulo.setQr(art.getCodigoQr());
+			articulo.setStock(art.getStock());
+			articulo.setSubcategoria(art.getSubcategoria().getSubNombre());
+			response.add(articulo);
+		}
+		
+		return response;
 	}
 	
 	public static void editArticuloQr(String nombre, String qr) {
@@ -24,7 +51,7 @@ public class ArticuloManager {
 	public static void editArticuloStock(String id, String cantidad) {
 		ArticuloDB.editarArticuloStock(id, cantidad);
 	}
-
+	
 	public static void createArticulo(String categoria, String proveedor, String nombre, String stockMinimo,
 			String stockMaximo, String costo) {
 
