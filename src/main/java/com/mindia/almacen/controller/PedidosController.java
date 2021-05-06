@@ -6,11 +6,13 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mindia.almacen.manager.PedidoManager;
 import com.mindia.almacen.model.Pedido;
 import com.mindia.almacen.pojo.CreatePedidoRequest;
+import com.mindia.almacen.pojo.PedidoDetalleView;
 import com.mindia.almacen.pojo.PedidoView;
 
 @RestController
@@ -37,4 +39,10 @@ public class PedidosController {
 	public void createPedido(@RequestBody CreatePedidoRequest body) {
 		PedidoManager.createPedido(body.getObservaciones(), body.getNombreUsuario(), body.getNombresArticulos(), body.getCantidadesArticulos());
 	}
+	
+	@GetMapping("/pedido/detalle")
+	public PedidoDetalleView getAllDetallePedido(@RequestParam("id") int id) {
+		return PedidoManager.getPedidoDetalle(id);
+	}
+	
 }

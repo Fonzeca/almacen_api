@@ -3,17 +3,47 @@ package com.mindia.almacen.manager;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.mindia.almacen.model.Pedido;
 import com.mindia.almacen.persistence.ArticuloPedidoDB;
 import com.mindia.almacen.persistence.EstadoPedidoDB;
 import com.mindia.almacen.persistence.PedidoDB;
 import com.mindia.almacen.persistence.UsuarioDB;
+import com.mindia.almacen.pojo.ArticuloPedidoView;
+import com.mindia.almacen.pojo.PedidoDetalleView;
 
 public class PedidoManager {
 
 	public static List<Pedido> getAllPedidos() {
 		return PedidoDB.getPedidosCompleto();
+	}
+	
+	public static PedidoDetalleView getPedidoDetalle(int pedidoId) {
+		PedidoDetalleView view = new PedidoDetalleView();
+		
+		var detalles = ArticuloPedidoDB.getArticulosPedidosByPedido(pedidoId);
+		
+		var pedido = PedidoDB.getPedidoByID(pedidoId);
+		
+		view.setPedidoId(pedidoId);
+		view.setObservaciones(pedido.getObservaciones());
+		view.setUsuario(pedido.getUsuario().getNombreUsuario());
+		view.setEstadopedido(pedido.getEstadopedido().getNombreEstado());
+		
+		var detallesView = detalles.stream().map(x -> {
+			ArticuloPedidoView detalleView = new ArticuloPedidoView();
+			
+			detalleView.setArticuloId(x.getArticulo().getArticuloId());
+			detalleView.setCantidad(x.getCantidad());
+			detalleView.setNombre(x.getArticulo().getNombre());
+			
+			return detalleView;
+		}).collect(Collectors.toList());
+		
+		view.setPedidos(detallesView);
+		
+		return view;
 	}
 
 	public static int createPedido(String obser, String user, String arts, String cants) {
