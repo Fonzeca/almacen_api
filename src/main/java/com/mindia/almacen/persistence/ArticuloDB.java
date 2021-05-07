@@ -79,6 +79,7 @@ public class ArticuloDB {
 		try {
 			sess = HibernateUtils.openSession();
 			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.articuloId != null and a.nombre LIKE '%" + nombre +"%'");
+			query.setMaxResults(10);
 			articulos = query.getResultList();
 			for (Articulo ar : articulos) {
 				Hibernate.initialize(ar.getSubcategoria());
