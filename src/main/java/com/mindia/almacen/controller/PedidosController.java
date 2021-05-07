@@ -25,6 +25,7 @@ public class PedidosController {
 
 		for (Pedido pedido : PedidoManager.getAllPedidos()) {
 			PedidoView view = new PedidoView();
+			view.setViewId(pedido.getPedidoId().toString());
 			view.setEstadoPedido(pedido.getEstadopedido().getNombreEstado());
 			view.setFecha(pedido.getFecha().toString());
 			view.setObservaciones(pedido.getObservaciones());
@@ -42,6 +43,7 @@ public class PedidosController {
 
 		for (Pedido pedido : PedidoManager.getPedidosUser(username)) {
 			PedidoView view = new PedidoView();
+			view.setViewId(pedido.getPedidoId().toString());
 			view.setEstadoPedido(pedido.getEstadopedido().getNombreEstado());
 			view.setFecha(pedido.getFecha().toString());
 			view.setObservaciones(pedido.getObservaciones());
