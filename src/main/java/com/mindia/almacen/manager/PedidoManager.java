@@ -18,31 +18,35 @@ public class PedidoManager {
 	public static List<Pedido> getAllPedidos() {
 		return PedidoDB.getPedidosCompleto();
 	}
-	
+
+	public static List<Pedido> getPedidosUser(String username) {
+		return PedidoDB.getPedidosIndividual(username);
+	}
+
 	public static PedidoDetalleView getPedidoDetalle(int pedidoId) {
 		PedidoDetalleView view = new PedidoDetalleView();
-		
+
 		var detalles = ArticuloPedidoDB.getArticulosPedidosByPedido(pedidoId);
-		
+
 		var pedido = PedidoDB.getPedidoByID(pedidoId);
-		
+
 		view.setPedidoId(pedidoId);
 		view.setObservaciones(pedido.getObservaciones());
 		view.setUsuario(pedido.getUsuario().getNombreUsuario());
 		view.setEstadopedido(pedido.getEstadopedido().getNombreEstado());
-		
+
 		var detallesView = detalles.stream().map(x -> {
 			ArticuloPedidoView detalleView = new ArticuloPedidoView();
-			
+
 			detalleView.setArticuloId(x.getArticulo().getArticuloId());
 			detalleView.setCantidad(x.getCantidad());
 			detalleView.setNombre(x.getArticulo().getNombre());
-			
+
 			return detalleView;
 		}).collect(Collectors.toList());
-		
+
 		view.setPedidos(detallesView);
-		
+
 		return view;
 	}
 
@@ -50,10 +54,10 @@ public class PedidoManager {
 		Pedido pedido = new Pedido();
 		pedido.setObservaciones(obser);
 		pedido.setFecha(new Date());
-		
+
 //		int idU = Integer.parseInt(user);
 		pedido.setUsuario(UsuarioDB.getUsuarioByNombreUsuario(user));
-		
+
 		int idEstado = 1;
 		pedido.setEstadopedido(EstadoPedidoDB.getEstadoById(idEstado));
 

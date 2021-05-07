@@ -8,6 +8,9 @@ import com.google.gson.annotations.SerializedName;
 @Generated("jsonschema2pojo")
 public class PedidoView {
 
+	@SerializedName("viewId")
+	@Expose
+	private String viewId;
 	@SerializedName("estadoPedido")
 	@Expose
 	private String estadoPedido;
@@ -51,6 +54,14 @@ public class PedidoView {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	public String getViewId() {
+		return viewId;
+	}
+
+	public void setViewId(String viewId) {
+		this.viewId = viewId;
 	}
 
 }
