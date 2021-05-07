@@ -10,6 +10,9 @@ import com.mindia.almacen.model.Equipo;
 @Generated("jsonschema2pojo")
 public class EquipoView {
 
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("usuario")
     @Expose
     private String usuario;
@@ -28,21 +31,22 @@ public class EquipoView {
     @SerializedName("accesorios")
     @Expose
     private String accesorios;
-    @SerializedName("estado")
+    @SerializedName("enUso")
     @Expose
-    private String estado;
+    private boolean enUso;
     
     public EquipoView() {
 	}
     
     public EquipoView(Equipo equipo) {
+    	this.id = equipo.getEquipoId();
     	this.usuario = equipo.getUsuario().getNombreUsuario();
     	this.nombre = equipo.getNombre();
     	this.serial = equipo.getSerial();
     	this.modelo = equipo.getModelo();
     	this.observaciones = equipo.getObservaciones();
     	this.accesorios = equipo.getAccesorios();
-    	this.estado = equipo.getEstado();
+    	this.enUso = equipo.getEstado().equals("En uso");
 	}
 
     public String getUsuario() {
@@ -93,11 +97,20 @@ public class EquipoView {
         this.accesorios = accesorios;
     }
 
-    public String getEstado() {
-        return estado;
-    }
+	public boolean isEnUso() {
+		return enUso;
+	}
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+	public void setEnUso(boolean enUso) {
+		this.enUso = enUso;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 }

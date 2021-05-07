@@ -57,7 +57,7 @@ public class UsuarioManager {
 	}
 
 	public static void eliminarUsuario(String id) {
-		UsuarioDB.eliminarUsuarioById(toInt(id));
+		UsuarioDB.eliminarUsuarioById(Integer.parseInt(id));
 	}
 
 	public static boolean validarCredenciales(String username, String pass) {
@@ -69,14 +69,10 @@ public class UsuarioManager {
 		return UsuarioDB.validar(username, pass);
 	}
 
-	private static int toInt(String id) {
-		int ids = Integer.parseInt(id);
-		return ids;
-	}
-
 	public static void editUsuario(int id, String rol, String area, String nombre, String apellido, String email) {
 		Rol r = RolDB.getRolByNombre(rol);
 		Area a = AreaDB.getAreaByNombre(area);
 		UsuarioDB.editarUsuario(id, r, a, nombre, apellido, email);
 	}
+	
 }

@@ -58,9 +58,12 @@ public class EquipoManager {
 		RegistroDB.crearRegistro(e,userActual);
 		
 	}
-	public static void changeStatus(int user,int id) {
-		System.out.println("Cambiando el estado del equipo n�mero "+id);
-		EquipoDB.cambiarEstado(user,id);
+	public static void changeStatus(String user,int id, boolean enUso) {
+		System.out.println("Cambiando el estado del equipo numero "+id+ " a en uso en " + enUso);
+		
+		Usuario usuario = UsuarioDB.getUsuarioByID(id);
+		
+		EquipoDB.cambiarEstado(usuario.getUsuarioId(), id, enUso);
 	}
 	
 	public static List<EquipoView> listarEquipos() {
