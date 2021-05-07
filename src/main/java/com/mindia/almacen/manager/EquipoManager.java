@@ -2,6 +2,7 @@ package com.mindia.almacen.manager;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.mindia.almacen.model.Equipo;
 import com.mindia.almacen.model.Usuario;
@@ -10,9 +11,11 @@ import com.mindia.almacen.persistence.LugarDB;
 import com.mindia.almacen.persistence.RegistroDB;
 import com.mindia.almacen.persistence.TipoDB;
 import com.mindia.almacen.persistence.UsuarioDB;
+import com.mindia.almacen.pojo.EquipoView;
 
 
 public class EquipoManager {
+	
 	public static void createEquipo(String serial, String nombre, String tipo, String lugar, String modelo, String usuario,
 			String observaciones, String accesorios,Usuario userActual) {
 		Equipo equipo= new Equipo();
@@ -59,9 +62,21 @@ public class EquipoManager {
 		System.out.println("Cambiando el estado del equipo n�mero "+id);
 		EquipoDB.cambiarEstado(user,id);
 	}
-	public static List<Equipo> listarEquipos() {
-		return EquipoDB.getListaEquipos();
+	
+	public static List<EquipoView> listarEquipos() {
+		
+		//OJO: devuelve todos los equipos, tener en cuenta paginado o busqueda like
+		List<Equipo> equipos = EquipoDB.getListaEquipos();
+		
+		List<EquipoView> views = equipos.stream()
+									.map(x -> new EquipoView(x))
+									.collect(Collectors.toList());
+		
+		return views;
+		
+//		return EquipoDB.getListaEquipos().stream().map(x -> new EquipoView(x)).collect(Collectors.toList());
 	}
+	
 	public static  List<Equipo> listarTodosEquipos(){
 		return EquipoDB.getListaEquiposCompleta();
 	}
