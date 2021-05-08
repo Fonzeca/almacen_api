@@ -54,7 +54,11 @@ public class ArticuloManager {
 	
 	public static void createArticulo(String categoria, String proveedor, String nombre, String stockMinimo,
 			String stockMaximo, String costo) {
-
+		
+		if(categoria != null) {
+			return;
+		}
+		
 		Articulo articuloNuevo = new Articulo();
 
 		double costoFloat = -1;

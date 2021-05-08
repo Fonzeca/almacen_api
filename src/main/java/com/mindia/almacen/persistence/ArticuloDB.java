@@ -36,7 +36,7 @@ public class ArticuloDB {
 		List<Articulo> articulos = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.articuloId!=null");
+			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.articuloId!=null", Articulo.class);
 			articulos = query.getResultList();
 			for (Articulo ar : articulos) {
 				Hibernate.initialize(ar.getSubcategoria());
@@ -57,8 +57,8 @@ public class ArticuloDB {
 
 			sess = HibernateUtils.openSession();
 			Query<Articulo> query = sess
-					.createQuery("SELECT distinct a FROM Articulo a WHERE a.nombre='" + nombre + "'");
-			articulo = (Articulo) query.getSingleResult();
+					.createQuery("SELECT distinct a FROM Articulo a WHERE a.nombre='" + nombre + "'", Articulo.class);
+			articulo = query.getResultList().get(0);
 			Hibernate.initialize(articulo);
 			Hibernate.initialize(articulo.getProveedor());
 			Hibernate.initialize(articulo.getSubcategoria());
@@ -78,7 +78,7 @@ public class ArticuloDB {
 		List<Articulo> articulos = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.articuloId != null and a.nombre LIKE '%" + nombre +"%'");
+			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.articuloId != null and a.nombre LIKE '%" + nombre +"%'", Articulo.class);
 			query.setMaxResults(10);
 			articulos = query.getResultList();
 			for (Articulo ar : articulos) {
@@ -98,7 +98,7 @@ public class ArticuloDB {
 		List<Articulo> articulos = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.estadoarticulo=1");
+			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.estadoarticulo=1", Articulo.class);
 			articulos = query.getResultList();
 			for (Articulo a : articulos) {
 				Hibernate.initialize(a.getEstadoarticulo());
@@ -118,7 +118,7 @@ public class ArticuloDB {
 
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.proveedor='" + prov + "'");
+			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.proveedor='" + prov + "'", Articulo.class);
 			articulos = query.getResultList();
 			for (Articulo a : articulos) {
 				Hibernate.initialize(a.getSubcategoria());
