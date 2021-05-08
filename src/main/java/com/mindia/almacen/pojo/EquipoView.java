@@ -22,6 +22,12 @@ public class EquipoView {
     @SerializedName("serial")
     @Expose
     private String serial;
+    @SerializedName("tipo")
+    @Expose
+    private String tipo;
+    @SerializedName("lugar")
+    @Expose
+    private String lugar;
     @SerializedName("modelo")
     @Expose
     private String modelo;
@@ -39,6 +45,8 @@ public class EquipoView {
 	}
     
     public EquipoView(Equipo equipo) {
+    	this.tipo = equipo.getTipo().getNombre();
+    	this.lugar = equipo.getLugar().getNombre();
     	this.id = equipo.getEquipoId();
     	this.usuario = equipo.getUsuario().getNombreUsuario();
     	this.nombre = equipo.getNombre();
@@ -111,6 +119,22 @@ public class EquipoView {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getLugar() {
+		return lugar;
+	}
+
+	public void setLugar(String lugar) {
+		this.lugar = lugar;
 	}
 
 }
