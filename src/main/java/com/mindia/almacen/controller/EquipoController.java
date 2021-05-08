@@ -23,7 +23,7 @@ public class EquipoController {
 		return EquipoManager.listarEquipos();
 	}
 	
-	@PutMapping
+	@PutMapping("/equipo/status")
 	public void changeEquipoStatus(@RequestParam boolean enUso, @RequestParam int id, @RequestHeader("Authorization") String token) {
 		String prefix = "Bearer ";
 		token = token.replace(prefix, "");
