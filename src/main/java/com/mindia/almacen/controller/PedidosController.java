@@ -3,6 +3,9 @@ package com.mindia.almacen.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +24,28 @@ public class PedidosController {
 
 	@GetMapping("/pedido")
 	public List<PedidoView> getAllPedidos() {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		
+		@SuppressWarnings("unchecked")
+		String rol = ((List<SimpleGrantedAuthority>) 
+						 authentication
+						.getAuthorities())
+						.get(0)
+						.getAuthority();
+		
+		List<Pedido> pedidos = null;
+		
+		if(rol.equals("Solicitante")) {
+			pedidos = PedidoManager.getPedidosUser(authentication.getPrincipal().toString());
+		}else {
+			pedidos = PedidoManager.getAllPedidos();
+		}
+		
 		List<PedidoView> views = new ArrayList<PedidoView>();
 
-		for (Pedido pedido : PedidoManager.getAllPedidos()) {
+		for (Pedido pedido : pedidos) {
 			PedidoView view = new PedidoView();
 			view.setViewId(pedido.getPedidoId().toString());
 			view.setEstadoPedido(pedido.getEstadopedido().getNombreEstado());
