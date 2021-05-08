@@ -31,7 +31,6 @@ public class RegistroView {
     	this.usuario = r.getUsuario().getNombreUsuario();
     	this.fecha = r.getFecha().toString();
     	this.entrada = r.getEntrada();
-    	
 	}
 
     public Integer getId() {
