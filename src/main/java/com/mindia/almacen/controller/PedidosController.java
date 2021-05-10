@@ -24,25 +24,20 @@ public class PedidosController {
 
 	@GetMapping("/pedido")
 	public List<PedidoView> getAllPedidos() {
-		
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		
+
 		@SuppressWarnings("unchecked")
-		String rol = ((List<SimpleGrantedAuthority>) 
-						 authentication
-						.getAuthorities())
-						.get(0)
-						.getAuthority();
-		
+		String rol = ((List<SimpleGrantedAuthority>) authentication.getAuthorities()).get(0).getAuthority();
+
 		List<Pedido> pedidos = null;
-		
-		if(rol.equals("Solicitante")) {
+
+		if (rol.equals("Solicitante")) {
 			pedidos = PedidoManager.getPedidosUser(authentication.getPrincipal().toString());
-		}else {
+		} else {
 			pedidos = PedidoManager.getAllPedidos();
 		}
-		
+
 		List<PedidoView> views = new ArrayList<PedidoView>();
 
 		for (Pedido pedido : pedidos) {
@@ -87,4 +82,13 @@ public class PedidosController {
 		return PedidoManager.getPedidoDetalle(id);
 	}
 
+	@GetMapping("/pedido/entregar")
+	public void entregarPedido(@RequestParam("id") String id) {
+		PedidoManager.entregarPedido(id);
+	}
+
+	@GetMapping("/pedido/eliminar")
+	public void eliminarPedido(@RequestParam("id") String id) {
+		PedidoManager.eliminarPedido(id);
+	}
 }

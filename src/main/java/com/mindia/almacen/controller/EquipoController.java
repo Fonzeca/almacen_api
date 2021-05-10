@@ -16,23 +16,28 @@ import io.jsonwebtoken.Claims;
 
 @RestController
 public class EquipoController {
-	
-	
+
 	@GetMapping("/equipo")
 	public List<EquipoView> getAllEquipos() {
 		return EquipoManager.listarEquipos();
 	}
-	
+
+	@GetMapping("/equipo/detalle")
+	public EquipoView getAllDetalleEquipo(@RequestParam("id") int id) {
+		return EquipoManager.getEquipo(id);
+	}
+
 	@PutMapping("/equipo/status")
-	public void changeEquipoStatus(@RequestParam boolean enUso, @RequestParam int id, @RequestHeader("Authorization") String token) {
+	public void changeEquipoStatus(@RequestParam boolean enUso, @RequestParam int id,
+			@RequestHeader("Authorization") String token) {
 		String prefix = "Bearer ";
 		token = token.replace(prefix, "");
-		
+
 		Claims claims = JWTAuthorizationFilter.validateToken(token);
-		
+
 		String userName = claims.getSubject();
-		
+
 		EquipoManager.changeStatus(userName, id, enUso);
 	}
-	
+
 }
