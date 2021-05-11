@@ -7,6 +7,7 @@
 		<property name="hibernate.connection.url">jdbc:mysql://vps-1791261-x.dattaweb.com:3306/almacen</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">almacen.C12</property>
+		<property name="hibernate.enable_lazy_load_no_trans">true</property>
 		
 		
 		
@@ -20,6 +21,7 @@
 		<property name="c3p0.max_size">20</property>
 		<property name="c3p0.timeout">1800</property>
 		<property name="c3p0.max_statements">50</property>
+		
 
 		<mapping class="com.mindia.almacen.model.Area" />
 		<mapping class="com.mindia.almacen.model.Articulo" />
