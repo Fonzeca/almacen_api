@@ -56,12 +56,12 @@ public class EquipoManager {
 
 	}
 
-	public static void changeStatus(String user, int id, boolean enUso) {
-		System.out.println("Cambiando el estado del equipo numero " + id + " a en uso en " + enUso);
+	public static void changeStatus(String user, int id) {
+		System.out.println("Cambiando el estado del equipo numero " + id);
 
 		Usuario usuario = UsuarioDB.getUsuarioByID(id);
 
-		EquipoDB.cambiarEstado(usuario.getUsuarioId(), id, enUso);
+		EquipoDB.cambiarEstado(usuario.getUsuarioId(), id);
 	}
 
 	public static List<EquipoView> listarEquipos() {

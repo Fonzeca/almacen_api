@@ -28,8 +28,7 @@ public class EquipoController {
 	}
 
 	@PutMapping("/equipo/status")
-	public void changeEquipoStatus(@RequestParam boolean enUso, @RequestParam int id,
-			@RequestHeader("Authorization") String token) {
+	public void changeEquipoStatus(@RequestParam int id, @RequestHeader("Authorization") String token) {
 		String prefix = "Bearer ";
 		token = token.replace(prefix, "");
 
@@ -37,7 +36,7 @@ public class EquipoController {
 
 		String userName = claims.getSubject();
 
-		EquipoManager.changeStatus(userName, id, enUso);
+		EquipoManager.changeStatus(userName, id);
 	}
 
 }

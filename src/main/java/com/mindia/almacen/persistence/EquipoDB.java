@@ -29,7 +29,7 @@ public class EquipoDB {
 		}
 	}
 
-	public static void cambiarEstado(int user, int id, boolean enUso) {
+	public static void cambiarEstado(int user, int id) {
 		Session sess = null;
 		Transaction tran = null;
 		Equipo e = null;
@@ -38,11 +38,11 @@ public class EquipoDB {
 			tran = sess.beginTransaction();
 			e = sess.get(Equipo.class, id);
 			sess.update(e);
-			
-			if(enUso) {
+
+			if (e.getEstado().equals("En Uso")) {
 				RegistroManager.createRegistro(true, user, id);
 				e.setEstado("Disponible");
-			}else {
+			} else {
 				RegistroManager.createRegistro(false, user, id);
 				e.setEstado("En uso");
 			}
