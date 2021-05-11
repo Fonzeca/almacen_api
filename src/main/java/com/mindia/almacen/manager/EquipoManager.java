@@ -13,77 +13,77 @@ import com.mindia.almacen.persistence.TipoDB;
 import com.mindia.almacen.persistence.UsuarioDB;
 import com.mindia.almacen.pojo.EquipoView;
 
-
 public class EquipoManager {
-	
-	public static void createEquipo(String serial, String nombre, String tipo, String lugar, String modelo, String usuario,
-			String observaciones, String accesorios,Usuario userActual) {
-		Equipo equipo= new Equipo();
+
+	public static void createEquipo(String serial, String nombre, String tipo, String lugar, String modelo,
+			String usuario, String observaciones, String accesorios, Usuario userActual) {
+		Equipo equipo = new Equipo();
 		equipo.setLugar(LugarDB.getLugarByNombre(lugar));
 		equipo.setTipo(TipoDB.getTipoByNombre(tipo));
 		equipo.setNombre(nombre);
-		
-		
-		if(serial==null) {
+
+		if (serial == null) {
 			equipo.setSerial("N/A");
-		}else equipo.setSerial(serial);
-		
-		
-		
-		if(modelo==null) {
+		} else
+			equipo.setSerial(serial);
+
+		if (modelo == null) {
 			equipo.setModelo("N/A");
-		}else equipo.setModelo(modelo);
-		
-		
-		if(usuario!=null) {
+		} else
+			equipo.setModelo(modelo);
+
+		if (usuario != null) {
 			equipo.setUsuario(UsuarioDB.getUsuarioByNombreUsuario(usuario));
 		}
-		if(observaciones==null) {
+		if (observaciones == null) {
 			equipo.setObservaciones("N/A");
-		}else equipo.setObservaciones(observaciones);
-		
-		if(accesorios==null) {
+		} else
+			equipo.setObservaciones(observaciones);
+
+		if (accesorios == null) {
 			equipo.setAccesorios("N/A");
-		}else equipo.setAccesorios(accesorios);
-		
+		} else
+			equipo.setAccesorios(accesorios);
+
 		equipo.setEstado("Disponible");
-		
-		
-		Serializable idS=EquipoDB.crearEquipo(equipo);
-		int id=(int) idS;
-		Equipo e=EquipoDB.getEquipoByID(id);
+
+		Serializable idS = EquipoDB.crearEquipo(equipo);
+		int id = (int) idS;
+		Equipo e = EquipoDB.getEquipoByID(id);
 		System.out.println(e.getNombre());
-		
-		
-		RegistroDB.crearRegistro(e,userActual);
-		
+
+		RegistroDB.crearRegistro(e, userActual);
+
 	}
-	public static void changeStatus(String user,int id, boolean enUso) {
-		System.out.println("Cambiando el estado del equipo numero "+id+ " a en uso en " + enUso);
-		
+
+	public static void changeStatus(String user, int id, boolean enUso) {
+		System.out.println("Cambiando el estado del equipo numero " + id + " a en uso en " + enUso);
+
 		Usuario usuario = UsuarioDB.getUsuarioByID(id);
-		
+
 		EquipoDB.cambiarEstado(usuario.getUsuarioId(), id, enUso);
 	}
-	
+
 	public static List<EquipoView> listarEquipos() {
-		
-		//OJO: devuelve todos los equipos, tener en cuenta paginado o busqueda like
+
+		// OJO: devuelve todos los equipos, tener en cuenta paginado o busqueda like
 		List<Equipo> equipos = EquipoDB.getListaEquipos();
-		
-		List<EquipoView> views = equipos.stream()
-									.map(x -> new EquipoView(x))
-									.collect(Collectors.toList());
-		
+
+		List<EquipoView> views = equipos.stream().map(x -> new EquipoView(x)).collect(Collectors.toList());
+
 		return views;
-		
+
 //		return EquipoDB.getListaEquipos().stream().map(x -> new EquipoView(x)).collect(Collectors.toList());
 	}
-	
-	public static  List<Equipo> listarTodosEquipos(){
+
+	public static List<Equipo> listarTodosEquipos() {
 		return EquipoDB.getListaEquiposCompleta();
 	}
-	public static Equipo getEquipo(int id) {
-		return EquipoDB.getEquipoByID(id);
+
+	public static EquipoView getEquipo(int id) {
+		Equipo equipo = EquipoDB.getEquipoByID(id);
+		EquipoView equipoView = new EquipoView(equipo);
+
+		return equipoView;
 	}
 }
