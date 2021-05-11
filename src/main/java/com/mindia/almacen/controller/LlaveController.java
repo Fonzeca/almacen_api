@@ -16,4 +16,10 @@ public class LlaveController {
 
 	}
 
+	@GetMapping("/llave/change")
+	public void changeLlaveStatus(@RequestParam("identificacion") String identificacion,
+			@RequestParam("entrada") String entrada) {
+		LlaveManager.changeStatus(identificacion, entrada);
+	}
+
 }

@@ -33,4 +33,18 @@ public class LlaveDB {
 			sess.close();
 		}
 	}
+
+	public static void changeStatus(Integer id, String nombre, String entrada) {
+		Session sess = null;
+		Llave llave = null;
+		try {
+			sess = HibernateUtils.openSession();
+			Transaction tran = sess.beginTransaction();
+			llave = sess.get(Llave.class, id);
+			llave.setEstado(entrada);
+			tran.commit();
+		} finally {
+			sess.close();
+		}
+	}
 }

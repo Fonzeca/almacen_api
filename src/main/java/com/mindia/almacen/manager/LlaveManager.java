@@ -20,4 +20,12 @@ public class LlaveManager {
 		return llaveView;
 	}
 
+	public static void changeStatus(String identificacion, String entrada) {
+		String[] ident = identificacion.split("-");
+		String nombre = ident[0];
+		String idS = ident[1];
+		Integer id = Integer.parseInt(idS);
+		LlaveDB.changeStatus(id, nombre, entrada);
+	}
+
 }
