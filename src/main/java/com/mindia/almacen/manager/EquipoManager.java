@@ -59,7 +59,7 @@ public class EquipoManager {
 	public static void changeStatus(String user, int id) {
 		System.out.println("Cambiando el estado del equipo numero " + id);
 
-		Usuario usuario = UsuarioDB.getUsuarioByID(id);
+		Usuario usuario = UsuarioDB.getUsuarioByNombreUsuario(user);
 
 		EquipoDB.cambiarEstado(usuario.getUsuarioId(), id);
 	}
