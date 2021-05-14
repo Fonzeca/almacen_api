@@ -10,7 +10,7 @@ import com.mindia.almacen.model.GrupoLlaves;
 
 
 @Repository
-public interface GrupoLlaveRepository extends JpaRepository<GrupoLlaves, Long>  {
+public interface GrupoLlaveRepository extends JpaRepository<GrupoLlaves, Integer>  {
 	
 	List<GrupoLlaves> findByNombre(String nombre);
 	

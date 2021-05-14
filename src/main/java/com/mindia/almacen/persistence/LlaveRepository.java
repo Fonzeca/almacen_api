@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.mindia.almacen.model.Llave;
 
 @Repository
-public interface LlaveRepository extends JpaRepository<Llave, Long>  {
+public interface LlaveRepository extends JpaRepository<Llave, Integer>  {
 	
 	@Query("select l from Llave l where l.llaveId = ?1 and l.nombre = ?2")
 	public List<Llave> obtenerByIdentificacion(int id, String nombre);
