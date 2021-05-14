@@ -43,7 +43,7 @@ public class LlaveManager {
 		//TODO: codigo repetido
 		Llave llave = null;
 		try {
-			llave = llaveRepo.findById(Long.parseLong(id)).get();
+			llave = llaveRepo.findById(Integer.parseInt(id)).get();
 		} catch (NoSuchElementException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Llave no encontrada");
 		}
