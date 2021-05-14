@@ -23,7 +23,6 @@ public class RegistroManager {
 		
 		Equipo equipo=EquipoDB.getEquipoByID(equip);
 		Usuario usuario=UsuarioDB.getUsuarioByID(user);
-		registro.setEquipo(equipo);
 		registro.setUsuario(usuario);
 		
 		RegistroDB.crearRegistro(registro);

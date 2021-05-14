@@ -1,8 +1,6 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 10:25:50 by Hibernate Tools 5.2.12.Final
+// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +9,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -32,7 +29,6 @@ public class Equipo implements java.io.Serializable {
 	private String observaciones;
 	private String accesorios;
 	private String estado;
-	private Set<Registro> registros = new HashSet<Registro>(0);
 
 	public Equipo() {
 	}
@@ -42,7 +38,7 @@ public class Equipo implements java.io.Serializable {
 	}
 
 	public Equipo(GrupoEquipos grupoEquipos, Lugar lugar, Tipo tipo, Usuario usuario, String nombre, String serial,
-			String modelo, String observaciones, String accesorios, String estado, Set<Registro> registros) {
+			String modelo, String observaciones, String accesorios, String estado) {
 		this.grupoEquipos = grupoEquipos;
 		this.lugar = lugar;
 		this.tipo = tipo;
@@ -53,7 +49,6 @@ public class Equipo implements java.io.Serializable {
 		this.observaciones = observaciones;
 		this.accesorios = accesorios;
 		this.estado = estado;
-		this.registros = registros;
 	}
 
 	@Id
@@ -160,15 +155,6 @@ public class Equipo implements java.io.Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "equipo")
-	public Set<Registro> getRegistros() {
-		return this.registros;
-	}
-
-	public void setRegistros(Set<Registro> registros) {
-		this.registros = registros;
 	}
 
 }

@@ -1,11 +1,12 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 10:25:50 by Hibernate Tools 5.2.12.Final
+// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -49,7 +50,7 @@ public class Llave implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "llaveId", unique = true, nullable = false)
+	@Column(name = "llave_id", unique = true, nullable = false)
 	public Integer getLlaveId() {
 		return this.llaveId;
 	}
@@ -59,7 +60,7 @@ public class Llave implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "grupoId")
+	@JoinColumn(name = "grupo_id")
 	public GrupoLlaves getGrupoLlaves() {
 		return this.grupoLlaves;
 	}
