@@ -5,7 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import com.mindia.almacen.model.Llave;
 
 public class LlaveView {
-
+	
+	@SerializedName("llaveId")
+	@Expose
+	private Integer llaveId;
 	@SerializedName("nombre")
 	@Expose
 	private String nombre;
@@ -80,6 +83,14 @@ public class LlaveView {
 
 	public void setUbicacion(String ubicacion) {
 		this.ubicacion = ubicacion;
+	}
+
+	public Integer getLlaveId() {
+		return llaveId;
+	}
+
+	public void setLlaveId(Integer llaveId) {
+		this.llaveId = llaveId;
 	}
 
 }
