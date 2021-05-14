@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 5/12/2019 02:23:59 PM by Hibernate Tools 5.0.6.Final
+// Generated 14-may-2021 10:25:50 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +26,7 @@ public class Area implements java.io.Serializable {
 	private Usuario usuario;
 	private String nombreArea;
 	private Set<Usuario> usuarios = new HashSet<Usuario>(0);
+	private Set<Usuario> usuarios_1 = new HashSet<Usuario>(0);
 
 	public Area() {
 	}
@@ -34,10 +35,11 @@ public class Area implements java.io.Serializable {
 		this.nombreArea = nombreArea;
 	}
 
-	public Area(Usuario usuario, String nombreArea, Set<Usuario> usuarios) {
+	public Area(Usuario usuario, String nombreArea, Set<Usuario> usuarios, Set<Usuario> usuarios_1) {
 		this.usuario = usuario;
 		this.nombreArea = nombreArea;
 		this.usuarios = usuarios;
+		this.usuarios_1 = usuarios_1;
 	}
 
 	@Id
@@ -78,6 +80,15 @@ public class Area implements java.io.Serializable {
 
 	public void setUsuarios(Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "area")
+	public Set<Usuario> getUsuarios_1() {
+		return this.usuarios_1;
+	}
+
+	public void setUsuarios_1(Set<Usuario> usuarios_1) {
+		this.usuarios_1 = usuarios_1;
 	}
 
 }

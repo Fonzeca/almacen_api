@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 5/12/2019 02:23:59 PM by Hibernate Tools 5.0.6.Final
+// Generated 14-may-2021 10:25:50 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;

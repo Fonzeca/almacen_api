@@ -28,10 +28,10 @@ public class LlaveView {
 	public LlaveView(Llave llave) {
 		this.copia = llave.getCopia();
 		this.estado = llave.getEstado();
-		this.grupo = llave.getGrupo().getNombre();
+		this.grupo = llave.getGrupoLlaves().getNombre();
 		this.nombre = llave.getNombre();
 		this.observaciones = llave.getObservaciones();
-		this.ubicacion = llave.getUbicacion().getNombre();
+		this.ubicacion = llave.getLugar().getNombre();
 	}
 
 	public String getNombre() {

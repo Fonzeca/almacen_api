@@ -4,10 +4,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import com.mindia.almacen.model.Grupo;
+import com.mindia.almacen.model.GrupoLlaves;
 
 public class GrupoDB {
-	public static void crearGrupo(Grupo grupo) {
+	public static void crearGrupo(GrupoLlaves grupo) {
 		Session sess = null;
 		Transaction trans = null;
 		try {
@@ -20,12 +20,12 @@ public class GrupoDB {
 		}
 	}
 
-	public static Grupo getGrupoByName(String nombre) {
+	public static GrupoLlaves getGrupoByName(String nombre) {
 		Session sess = null;
-		Grupo grupo = null;
+		GrupoLlaves grupo = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Grupo> query = sess.createQuery("select g from Grupo g where g.nombre='" + nombre + "'");
+			Query<GrupoLlaves> query = sess.createQuery("select g from Grupo g where g.nombre='" + nombre + "'");
 			grupo = query.getSingleResult();
 			return grupo;
 		} finally {
