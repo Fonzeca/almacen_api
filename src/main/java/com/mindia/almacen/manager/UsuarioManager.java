@@ -32,10 +32,10 @@ public class UsuarioManager {
 		LoggedUser loggedUser = new LoggedUser();
 		loggedUser.setApellido(usuario.getApellido());
 		loggedUser.setEmail(usuario.getEmail());
-		loggedUser.setEsAdmin(usuario.getRol().getRolId() > 1);
+		loggedUser.setEsAdmin(usuario.getRol().getId() > 1);
 		loggedUser.setNombre(usuario.getNombre());
 		loggedUser.setNombreUsuario(usuario.getNombreUsuario());
-		loggedUser.setRol(usuario.getRol().getNombreRol());
+		loggedUser.setRol(usuario.getRol().getNombre());
 		
 		return loggedUser;
 	}

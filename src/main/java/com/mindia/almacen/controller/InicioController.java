@@ -32,8 +32,8 @@ public class InicioController {
 		
 		if(UsuarioManager.validarCredenciales(username, pass)) {
 			Usuario user = UsuarioDB.getUsuarioByNombreUsuario(username);
-			token = getJWTToken(username, user.getRol().getNombreRol());
-			System.out.println(user.getRol().getNombreRol());
+			token = getJWTToken(username, user.getRol().getNombre());
+			System.out.println(user.getRol().getNombre());
 		}else {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		}

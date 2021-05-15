@@ -25,7 +25,7 @@ public class CategoriaManager {
 			for (Subcategoria subcategoria: categoria.getSubcategorias()) {
 				SubcategoriaView subcategoriaView = new SubcategoriaView();
 				
-				subcategoriaView.setNombre(subcategoria.getSubNombre());
+				subcategoriaView.setNombre(subcategoria.getNombre());
 				
 				subcategoriaViews.add(subcategoriaView);
 			}

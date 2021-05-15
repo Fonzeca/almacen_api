@@ -26,7 +26,7 @@ public class ArticulosController {
 			articulo.setNombre(art.getNombre());
 			articulo.setQr(art.getCodigoQr());
 			articulo.setStock(art.getStock());
-			articulo.setSubcategoria(art.getSubcategoria().getSubNombre());
+			articulo.setSubcategoria(art.getSubcategoria().getNombre());
 			response.add(articulo);
 		}
 
@@ -42,7 +42,7 @@ public class ArticulosController {
 		articuloView.setNombre(articulo.getNombre());
 		articuloView.setQr(articulo.getCodigoQr());
 		articuloView.setStock(articulo.getStock());
-		articuloView.setSubcategoria(articulo.getSubcategoria().getSubNombre());
+		articuloView.setSubcategoria(articulo.getSubcategoria().getNombre());
 
 		return articuloView;
 	}

@@ -37,7 +37,7 @@ public class ArticuloManager {
 			articulo.setNombre(art.getNombre());
 			articulo.setQr(art.getCodigoQr());
 			articulo.setStock(art.getStock());
-			articulo.setSubcategoria(art.getSubcategoria().getSubNombre());
+			articulo.setSubcategoria(art.getSubcategoria().getNombre());
 			response.add(articulo);
 		}
 
@@ -152,7 +152,7 @@ public class ArticuloManager {
 		view.setNombre(articulo.getNombre());
 		view.setQr(articulo.getCodigoQr());
 		view.setStock(articulo.getStock() + Integer.valueOf(cantidad));
-		view.setSubcategoria(articulo.getSubcategoria().getSubNombre());
+		view.setSubcategoria(articulo.getSubcategoria().getNombre());
 
 		return view;
 	}

@@ -61,7 +61,7 @@ public class EquipoManager {
 
 		Usuario usuario = UsuarioDB.getUsuarioByNombreUsuario(user);
 
-		EquipoDB.cambiarEstado(usuario.getUsuarioId(), id);
+		EquipoDB.cambiarEstado(usuario.getId(), id);
 	}
 
 	public static List<EquipoView> listarEquipos() {
