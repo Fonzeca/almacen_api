@@ -37,7 +37,8 @@ public class RegistroDB {
 		List<Registro> registros = new ArrayList<Registro>();
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Registro> query = sess.createQuery("select r from Registro r where r.equipo='" + equipo + "'");
+			Query<Registro> query = sess
+					.createQuery("select r from Registro r where r.entidad_id='" + equipo + "' and r.entidad='equipo'");
 			registros = query.getResultList();
 			for (Registro r : registros) {
 				Hibernate.initialize(r.getUsuario());
@@ -66,12 +67,12 @@ public class RegistroDB {
 		}
 	}
 
-	public static List<Registro> getRegistros() {
+	public static List<Registro> getRegistros(String entidad) {
 		Session sess = null;
 		List<Registro> registros = new ArrayList<Registro>();
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Registro> query = sess.createQuery("select r from Registro r");
+			Query<Registro> query = sess.createQuery("select r from Registro r where r.entidad='" + entidad + "'");
 			registros = query.getResultList();
 			for (Registro r : registros) {
 				Hibernate.initialize(r);
@@ -97,30 +98,29 @@ public class RegistroDB {
 			sess.close();
 		}
 	}
+
 	public static List<Registro> listarRecursosPorEquipo() {
-		Session sess=null;
-		List<Registro> registros=new ArrayList<Registro>();
-		List<Equipo> equipos= EquipoDB.getListaEquiposCompleta();
+		Session sess = null;
+		List<Registro> registros = new ArrayList<Registro>();
+		List<Equipo> equipos = EquipoDB.getListaEquiposCompleta();
 		try {
-			sess=HibernateUtils.openSession();
-			for(Equipo e:equipos) {
-				
-				Query<Registro> query= sess.createQuery("select r from Registro r where"
-						+ " r.equipo='"+e.getEquipoId()+"' order by r.fecha desc");
+			sess = HibernateUtils.openSession();
+			for (Equipo e : equipos) {
+
+				Query<Registro> query = sess.createQuery("select r from Registro r where" + " r.entidad_id='"
+						+ e.getEquipoId() + "' and r.entidad='equipo' order by r.fecha desc");
 				query.setMaxResults(1);
 				registros.add(query.getSingleResult());
 			}
-			for(Registro r:registros) {
+			for (Registro r : registros) {
 				Hibernate.initialize(r.getUsuario().getNombre());
 				Hibernate.initialize(r.getUsuario().getApellido());
 				Hibernate.initialize(r.getEquipo().getNombre());
 			}
 			return registros;
-		}finally {
+		} finally {
 			sess.close();
 		}
-		
-		
-		
+
 	}
 }

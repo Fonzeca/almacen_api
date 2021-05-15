@@ -36,12 +36,12 @@ public class UsuarioDB {
 		Usuario usuario;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Usuario> query = sess.createQuery("select u from Usuario u where u.nombreUsuario='" + nombre + "'");
+			Query<Usuario> query = sess.createQuery("select u from Usuario u where u.nombre_usuario='" + nombre + "'");
 			usuario = query.getSingleResult();
 			Hibernate.initialize(usuario.getArea());
 			Hibernate.initialize(usuario.getArea().getAreaId());
 			Hibernate.initialize(usuario.getArea().getNombreArea());
-			
+
 			Hibernate.initialize(usuario.getRol());
 			Hibernate.initialize(usuario.getRol().getNombreRol());
 			Hibernate.initialize(usuario.getRol().getRolId());
@@ -87,10 +87,10 @@ public class UsuarioDB {
 
 	public static void agregarUsuarioNuevo(Usuario user) {
 		Session sess = null;
-		Transaction tran=null;
+		Transaction tran = null;
 		try {
 			sess = HibernateUtils.openSession();
-			tran=sess.beginTransaction();
+			tran = sess.beginTransaction();
 			sess.save(user);
 			tran.commit();
 		} finally {
@@ -120,14 +120,14 @@ public class UsuarioDB {
 		Usuario user = new Usuario();
 		try {
 			sess = HibernateUtils.openSession();
-			Query query = sess.createQuery("select u from Usuario u where u.nombreUsuario='" + username + "'");
+			Query query = sess.createQuery("select u from Usuario u where u.nombre:usuario='" + username + "'");
 			if (query.uniqueResult() == null) {
 				System.out.println("El usuario ingresado no es correcto.");
 				return false;
 			} else {
 				user = (Usuario) query.getSingleResult();
 				if (LdapAuthentication.validarLDAP(username, pass)) {
-					System.out.println("El usuario " + username + " se loge� correctamente.");
+					System.out.println("El usuario " + username + " se logeó correctamente.");
 					return true;
 				} else {
 					return false;
@@ -145,9 +145,9 @@ public class UsuarioDB {
 		Session sess = null;
 		Transaction tran = null;
 		try {
-			sess=HibernateUtils.openSession();
-			tran=sess.beginTransaction();
-			u=getUsuarioByID(id);
+			sess = HibernateUtils.openSession();
+			tran = sess.beginTransaction();
+			u = getUsuarioByID(id);
 			sess.update(u);
 			u.setArea(a);
 			u.setRol(r);

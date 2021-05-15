@@ -26,7 +26,7 @@ public class LlaveDB {
 		try {
 			sess = HibernateUtils.openSession();
 			Query<Llave> query = sess
-					.createQuery("select l from Llave l where l.llaveId='" + id + "' and l.nombre='" + nombre + "'");
+					.createQuery("select l from Llave l where l.llave_id='" + id + "' and l.nombre='" + nombre + "'");
 			llave = query.getSingleResult();
 			return llave;
 		} finally {

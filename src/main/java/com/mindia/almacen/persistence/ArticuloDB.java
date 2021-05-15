@@ -36,7 +36,7 @@ public class ArticuloDB {
 		List<Articulo> articulos = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.articuloId!=null", Articulo.class);
+			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.id!=null", Articulo.class);
 			articulos = query.getResultList();
 			for (Articulo ar : articulos) {
 				Hibernate.initialize(ar.getSubcategoria());
@@ -72,13 +72,14 @@ public class ArticuloDB {
 			sess.close();
 		}
 	}
-	
-	public static List<Articulo> getArticulosLikeNombre(String nombre){
+
+	public static List<Articulo> getArticulosLikeNombre(String nombre) {
 		Session sess = null;
 		List<Articulo> articulos = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.articuloId != null and a.nombre LIKE '%" + nombre +"%'", Articulo.class);
+			Query<Articulo> query = sess.createQuery(
+					"select a from Articulo a where a.id != null and a.nombre LIKE '%" + nombre + "%'", Articulo.class);
 			query.setMaxResults(10);
 			articulos = query.getResultList();
 			for (Articulo ar : articulos) {
@@ -98,7 +99,7 @@ public class ArticuloDB {
 		List<Articulo> articulos = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.estadoarticulo=1", Articulo.class);
+			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.estado=1", Articulo.class);
 			articulos = query.getResultList();
 			for (Articulo a : articulos) {
 				Hibernate.initialize(a.getEstadoarticulo());
@@ -118,7 +119,8 @@ public class ArticuloDB {
 
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.proveedor='" + prov + "'", Articulo.class);
+			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.proveedor='" + prov + "'",
+					Articulo.class);
 			articulos = query.getResultList();
 			for (Articulo a : articulos) {
 				Hibernate.initialize(a.getSubcategoria());
@@ -203,9 +205,9 @@ public class ArticuloDB {
 			a.setStock(stockMaximo);
 			a.setStockMinimo(stockMinimo);
 			a.setSubcategoria(SubcategoriaDB.getSubcategoriaByNombre(subc));
-			if(stockMinimo>stockMaximo) {
+			if (stockMinimo > stockMaximo) {
 				a.setEstadoarticulo(EstadoArticuloDB.getEstadoById(2));
-			}else {
+			} else {
 				a.setEstadoarticulo(EstadoArticuloDB.getEstadoById(1));
 			}
 			tran.commit();
