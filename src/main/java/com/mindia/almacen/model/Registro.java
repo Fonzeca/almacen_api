@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 10:25:50 by Hibernate Tools 5.2.12.Final
+// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,19 +22,26 @@ import javax.persistence.TemporalType;
 public class Registro implements java.io.Serializable {
 
 	private Integer registroId;
-	private Equipo equipo;
 	private Usuario usuario;
 	private Date fecha;
 	private Boolean entrada;
+	private int entidadId;
+	private String entidad;
 
 	public Registro() {
 	}
 
-	public Registro(Equipo equipo, Usuario usuario, Date fecha, Boolean entrada) {
-		this.equipo = equipo;
+	public Registro(int entidadId, String entidad) {
+		this.entidadId = entidadId;
+		this.entidad = entidad;
+	}
+
+	public Registro(Usuario usuario, Date fecha, Boolean entrada, int entidadId, String entidad) {
 		this.usuario = usuario;
 		this.fecha = fecha;
 		this.entrada = entrada;
+		this.entidadId = entidadId;
+		this.entidad = entidad;
 	}
 
 	@Id
@@ -47,16 +54,6 @@ public class Registro implements java.io.Serializable {
 
 	public void setRegistroId(Integer registroId) {
 		this.registroId = registroId;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "equipo")
-	public Equipo getEquipo() {
-		return this.equipo;
-	}
-
-	public void setEquipo(Equipo equipo) {
-		this.equipo = equipo;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -86,6 +83,24 @@ public class Registro implements java.io.Serializable {
 
 	public void setEntrada(Boolean entrada) {
 		this.entrada = entrada;
+	}
+
+	@Column(name = "entidadId", nullable = false)
+	public int getEntidadId() {
+		return this.entidadId;
+	}
+
+	public void setEntidadId(int entidadId) {
+		this.entidadId = entidadId;
+	}
+
+	@Column(name = "entidad", nullable = false, length = 20)
+	public String getEntidad() {
+		return this.entidad;
+	}
+
+	public void setEntidad(String entidad) {
+		this.entidad = entidad;
 	}
 
 }

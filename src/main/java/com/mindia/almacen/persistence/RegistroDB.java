@@ -25,7 +25,6 @@ public class RegistroDB {
 			registro.setEntrada(true);
 			registro.setFecha(new Date());
 			registro.setUsuario(actual);
-			registro.setEquipo(e);
 			tran.commit();
 		} finally {
 			sess.close();
@@ -77,7 +76,6 @@ public class RegistroDB {
 			for (Registro r : registros) {
 				Hibernate.initialize(r);
 				Hibernate.initialize(r.getUsuario());
-				Hibernate.initialize(r.getEquipo().getNombre());
 				Hibernate.initialize(r.getUsuario().getNombreUsuario());
 			}
 			return registros;
@@ -115,7 +113,6 @@ public class RegistroDB {
 			for (Registro r : registros) {
 				Hibernate.initialize(r.getUsuario().getNombre());
 				Hibernate.initialize(r.getUsuario().getApellido());
-				Hibernate.initialize(r.getEquipo().getNombre());
 			}
 			return registros;
 		} finally {

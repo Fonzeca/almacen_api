@@ -40,7 +40,8 @@
 		<mapping class="com.mindia.almacen.model.Tipo"/>
 		<mapping class="com.mindia.almacen.model.Equipo"/>
 		<mapping class="com.mindia.almacen.model.Llave"/>
-		<mapping class="com.mindia.almacen.model.Grupo"/>
+		<mapping class="com.mindia.almacen.model.GrupoLlaves"/>
+		<mapping class="com.mindia.almacen.model.GrupoEquipos"/>
 		
 	</session-factory>
 </hibernate-configuration>
