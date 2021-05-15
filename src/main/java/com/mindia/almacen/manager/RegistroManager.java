@@ -38,7 +38,7 @@ public class RegistroManager {
 		return views;
 	}
 
-	public static List<Registro> getListaRegistros() {
-		return RegistroDB.getRegistros();
+	public static List<Registro> getListaRegistros(String entidad) {
+		return RegistroDB.getRegistros(entidad);
 	}
 }

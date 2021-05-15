@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
+// Generated 15-may-2021 11:58:12 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +42,7 @@ public class Lugar implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "lugarId", unique = true, nullable = false)
+	@Column(name = "lugar_id", unique = true, nullable = false)
 	public Integer getLugarId() {
 		return this.lugarId;
 	}

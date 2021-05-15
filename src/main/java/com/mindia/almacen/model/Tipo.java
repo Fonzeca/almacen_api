@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
+// Generated 15-may-2021 11:58:12 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "tipo", catalog = "almacen")
 public class Tipo implements java.io.Serializable {
 
-	private Integer tipoId;
+	private Integer id;
 	private String nombre;
 	private Set<Equipo> equipos = new HashSet<Equipo>(0);
 
@@ -34,13 +34,13 @@ public class Tipo implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "tipoId", unique = true, nullable = false)
-	public Integer getTipoId() {
-		return this.tipoId;
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setTipoId(Integer tipoId) {
-		this.tipoId = tipoId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Column(name = "nombre", length = 30)

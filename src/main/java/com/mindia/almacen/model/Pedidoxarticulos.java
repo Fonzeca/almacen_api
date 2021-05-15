@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
+// Generated 15-may-2021 11:58:12 by Hibernate Tools 5.2.12.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +35,7 @@ public class Pedidoxarticulos implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "PxaID", unique = true, nullable = false)
+	@Column(name = "pxa_id", unique = true, nullable = false)
 	public Integer getPxaId() {
 		return this.pxaId;
 	}
@@ -45,7 +45,7 @@ public class Pedidoxarticulos implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ArticuloID", nullable = false)
+	@JoinColumn(name = "articulo_id", nullable = false)
 	public Articulo getArticulo() {
 		return this.articulo;
 	}
@@ -55,7 +55,7 @@ public class Pedidoxarticulos implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PedidoID", nullable = false)
+	@JoinColumn(name = "pedido_id", nullable = false)
 	public Pedido getPedido() {
 		return this.pedido;
 	}
@@ -64,7 +64,7 @@ public class Pedidoxarticulos implements java.io.Serializable {
 		this.pedido = pedido;
 	}
 
-	@Column(name = "Cantidad", nullable = false)
+	@Column(name = "cantidad", nullable = false)
 	public int getCantidad() {
 		return this.cantidad;
 	}

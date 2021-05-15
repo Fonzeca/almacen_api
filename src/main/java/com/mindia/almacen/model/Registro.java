@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
+// Generated 15-may-2021 11:58:12 by Hibernate Tools 5.2.12.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 @Table(name = "registro", catalog = "almacen")
 public class Registro implements java.io.Serializable {
 
-	private Integer registroId;
+	private Integer id;
 	private Usuario usuario;
 	private Date fecha;
 	private Boolean entrada;
@@ -47,13 +47,13 @@ public class Registro implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "registroId", unique = true, nullable = false)
-	public Integer getRegistroId() {
-		return this.registroId;
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setRegistroId(Integer registroId) {
-		this.registroId = registroId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -85,7 +85,7 @@ public class Registro implements java.io.Serializable {
 		this.entrada = entrada;
 	}
 
-	@Column(name = "entidadId", nullable = false)
+	@Column(name = "entidad_id", nullable = false)
 	public int getEntidadId() {
 		return this.entidadId;
 	}

@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
+// Generated 15-may-2021 11:58:12 by Hibernate Tools 5.2.12.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,7 +54,7 @@ public class Equipo implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "equipoId", unique = true, nullable = false)
+	@Column(name = "equipo_id", unique = true, nullable = false)
 	public Integer getEquipoId() {
 		return this.equipoId;
 	}
@@ -64,7 +64,7 @@ public class Equipo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "grupoEquipoId")
+	@JoinColumn(name = "grupo_equipo_id")
 	public GrupoEquipos getGrupoEquipos() {
 		return this.grupoEquipos;
 	}
@@ -74,7 +74,7 @@ public class Equipo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lugarHabitual")
+	@JoinColumn(name = "lugar_habitual")
 	public Lugar getLugar() {
 		return this.lugar;
 	}
@@ -94,7 +94,7 @@ public class Equipo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuarioHabitual")
+	@JoinColumn(name = "usuario_habitual")
 	public Usuario getUsuario() {
 		return this.usuario;
 	}

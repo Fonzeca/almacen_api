@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
+// Generated 15-may-2021 11:58:12 by Hibernate Tools 5.2.12.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -71,7 +71,7 @@ public class Articulo implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "ArticuloID", unique = true, nullable = false)
+	@Column(name = "articulo_id", unique = true, nullable = false)
 	public Integer getArticuloId() {
 		return this.articuloId;
 	}
@@ -81,7 +81,7 @@ public class Articulo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Estado", nullable = false)
+	@JoinColumn(name = "estado", nullable = false)
 	public Estadoarticulo getEstadoarticulo() {
 		return this.estadoarticulo;
 	}
@@ -91,7 +91,7 @@ public class Articulo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Proveedor", nullable = false)
+	@JoinColumn(name = "proveedor", nullable = false)
 	public Proveedor getProveedor() {
 		return this.proveedor;
 	}
@@ -101,7 +101,7 @@ public class Articulo implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Categoria", nullable = false)
+	@JoinColumn(name = "categoria", nullable = false)
 	public Subcategoria getSubcategoria() {
 		return this.subcategoria;
 	}
@@ -110,7 +110,7 @@ public class Articulo implements java.io.Serializable {
 		this.subcategoria = subcategoria;
 	}
 
-	@Column(name = "Nombre", nullable = false, length = 50)
+	@Column(name = "nombre", nullable = false, length = 50)
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -119,7 +119,7 @@ public class Articulo implements java.io.Serializable {
 		this.nombre = nombre;
 	}
 
-	@Column(name = "Costo", nullable = false, precision = 22, scale = 0)
+	@Column(name = "costo", nullable = false, precision = 22, scale = 0)
 	public double getCosto() {
 		return this.costo;
 	}
@@ -129,7 +129,7 @@ public class Articulo implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "FechaAgregado", nullable = false, length = 10)
+	@Column(name = "fecha_agregado", nullable = false, length = 10)
 	public Date getFechaAgregado() {
 		return this.fechaAgregado;
 	}
@@ -138,7 +138,7 @@ public class Articulo implements java.io.Serializable {
 		this.fechaAgregado = fechaAgregado;
 	}
 
-	@Column(name = "StockMinimo", nullable = false)
+	@Column(name = "stock_minimo", nullable = false)
 	public int getStockMinimo() {
 		return this.stockMinimo;
 	}
@@ -147,7 +147,7 @@ public class Articulo implements java.io.Serializable {
 		this.stockMinimo = stockMinimo;
 	}
 
-	@Column(name = "Stock", nullable = false)
+	@Column(name = "stock", nullable = false)
 	public int getStock() {
 		return this.stock;
 	}
@@ -156,7 +156,7 @@ public class Articulo implements java.io.Serializable {
 		this.stock = stock;
 	}
 
-	@Column(name = "codigoQR", length = 100)
+	@Column(name = "codigo_qr", length = 100)
 	public String getCodigoQr() {
 		return this.codigoQr;
 	}

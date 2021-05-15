@@ -10,7 +10,7 @@ import com.mindia.almacen.manager.RegistroManager;
 public class RegistroController {
 	
 	
-	@GetMapping("/registro")
+	@GetMapping("/registro/equipo")
 	public void getAllRegistros(@RequestParam int equipoId) {
 		RegistroManager.getRegistrosByEquipo(equipoId);
 	}

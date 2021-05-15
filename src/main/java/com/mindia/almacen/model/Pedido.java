@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
+// Generated 15-may-2021 11:58:12 by Hibernate Tools 5.2.12.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -54,7 +54,7 @@ public class Pedido implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "PedidoID", unique = true, nullable = false)
+	@Column(name = "pedido_id", unique = true, nullable = false)
 	public Integer getPedidoId() {
 		return this.pedidoId;
 	}
@@ -64,7 +64,7 @@ public class Pedido implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Estado", nullable = false)
+	@JoinColumn(name = "estado", nullable = false)
 	public Estadopedido getEstadopedido() {
 		return this.estadopedido;
 	}
@@ -74,7 +74,7 @@ public class Pedido implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Usuario", nullable = false)
+	@JoinColumn(name = "usuario", nullable = false)
 	public Usuario getUsuario() {
 		return this.usuario;
 	}
@@ -84,7 +84,7 @@ public class Pedido implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Fecha", nullable = false, length = 10)
+	@Column(name = "fecha", nullable = false, length = 10)
 	public Date getFecha() {
 		return this.fecha;
 	}
@@ -93,7 +93,7 @@ public class Pedido implements java.io.Serializable {
 		this.fecha = fecha;
 	}
 
-	@Column(name = "Observaciones", length = 200)
+	@Column(name = "observaciones", length = 200)
 	public String getObservaciones() {
 		return this.observaciones;
 	}

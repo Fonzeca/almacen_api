@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 14-may-2021 19:31:48 by Hibernate Tools 5.2.12.Final
+// Generated 15-may-2021 11:58:12 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,39 +21,39 @@ import javax.persistence.Table;
 @Table(name = "subcategoria", catalog = "almacen")
 public class Subcategoria implements java.io.Serializable {
 
-	private Integer subId;
+	private Integer id;
 	private Categoria categoria;
-	private String subNombre;
+	private String nombre;
 	private Set<Articulo> articulos = new HashSet<Articulo>(0);
 
 	public Subcategoria() {
 	}
 
-	public Subcategoria(Categoria categoria, String subNombre) {
+	public Subcategoria(Categoria categoria, String nombre) {
 		this.categoria = categoria;
-		this.subNombre = subNombre;
+		this.nombre = nombre;
 	}
 
-	public Subcategoria(Categoria categoria, String subNombre, Set<Articulo> articulos) {
+	public Subcategoria(Categoria categoria, String nombre, Set<Articulo> articulos) {
 		this.categoria = categoria;
-		this.subNombre = subNombre;
+		this.nombre = nombre;
 		this.articulos = articulos;
 	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "SubId", unique = true, nullable = false)
-	public Integer getSubId() {
-		return this.subId;
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setSubId(Integer subId) {
-		this.subId = subId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "SubPadre", nullable = false)
+	@JoinColumn(name = "padre", nullable = false)
 	public Categoria getCategoria() {
 		return this.categoria;
 	}
@@ -62,13 +62,13 @@ public class Subcategoria implements java.io.Serializable {
 		this.categoria = categoria;
 	}
 
-	@Column(name = "SubNombre", nullable = false, length = 50)
-	public String getSubNombre() {
-		return this.subNombre;
+	@Column(name = "nombre", nullable = false, length = 50)
+	public String getNombre() {
+		return this.nombre;
 	}
 
-	public void setSubNombre(String subNombre) {
-		this.subNombre = subNombre;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subcategoria")
