@@ -8,10 +8,10 @@ import javax.annotation.Generated;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.mindia.almacen.model.GrupoLlaves;
+import com.mindia.almacen.model.GrupoEquipos;
 
 @Generated("jsonschema2pojo")
-public class LlaveGrupoView {
+public class GrupoEquipoView {
 
     @SerializedName("grupoId")
     @Expose
@@ -22,30 +22,30 @@ public class LlaveGrupoView {
     @SerializedName("nombre")
     @Expose
     private String nombre;
-    @SerializedName("llaves")
+    @SerializedName("equipos")
     @Expose
-    private List<LlaveView> llaves = null;
+    private List<EquipoView> equipos = null;
     
-    public LlaveGrupoView() {
+    public GrupoEquipoView() {
 	}
     
-    public LlaveGrupoView(GrupoLlaves llaves) {
-    	this.grupoId = llaves.getGrupoId();
-    	this.nombre = llaves.getNombre();
+    public GrupoEquipoView(GrupoEquipos equipos) {
+    	this.grupoId = equipos.getGrupoEquipoId();
+    	this.nombre = equipos.getNombre();
     	
-    	int contadorDisponible = llaves.getLlaves().stream().filter(o -> o.getEstado().equals("Disponible")).collect(Collectors.toList()).size();
-    	int contadorUso = llaves.getLlaves().stream().filter(o -> o.getEstado().equals("EnUso")).collect(Collectors.toList()).size();
-    	int sizeLlaves = llaves.getLlaves().size();
+    	int contadorDisponible = equipos.getEquipos().stream().filter(o -> o.getEstado().equals("Disponible")).collect(Collectors.toList()).size();
+    	int contadorUso = equipos.getEquipos().stream().filter(o -> o.getEstado().equals("En uso")).collect(Collectors.toList()).size();
+    	int sizeEquipos = equipos.getEquipos().size();
     	
-    	if(contadorDisponible == sizeLlaves) {
+    	if(contadorDisponible == sizeEquipos) {
     		this.estado = "Disponible";
-    	}else if(contadorUso == sizeLlaves){
+    	}else if(contadorUso == sizeEquipos){
     		this.estado = "En uso";
     	}else {
     		this.estado = "Parcial";
     	}
     	
-    	this.llaves = llaves.getLlaves().stream().map(o -> new LlaveView(o)).collect(Collectors.toList());
+    	this.equipos = equipos.getEquipos().stream().map(o -> new EquipoView(o)).collect(Collectors.toList());
 	}
 
 
@@ -65,20 +65,20 @@ public class LlaveGrupoView {
         this.nombre = nombre;
     }
 
-    public List<LlaveView> getLlaves() {
-        return llaves;
-    }
-
-    public void setLlaves(List<LlaveView> llaves) {
-        this.llaves = llaves;
-    }
-
 	public String getEstado() {
 		return estado;
 	}
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public List<EquipoView> getEquipos() {
+		return equipos;
+	}
+
+	public void setEquipos(List<EquipoView> equipos) {
+		this.equipos = equipos;
 	}
 
 }

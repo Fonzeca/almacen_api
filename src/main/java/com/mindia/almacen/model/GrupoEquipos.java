@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 15-may-2021 11:58:12 by Hibernate Tools 5.2.12.Final
+// Generated 15-may-2021 19:58:24 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,20 +21,17 @@ public class GrupoEquipos implements java.io.Serializable {
 
 	private Integer grupoEquipoId;
 	private String nombre;
-	private String estado;
 	private Set<Equipo> equipos = new HashSet<Equipo>(0);
 
 	public GrupoEquipos() {
 	}
 
-	public GrupoEquipos(String nombre, String estado) {
+	public GrupoEquipos(String nombre) {
 		this.nombre = nombre;
-		this.estado = estado;
 	}
 
-	public GrupoEquipos(String nombre, String estado, Set<Equipo> equipos) {
+	public GrupoEquipos(String nombre, Set<Equipo> equipos) {
 		this.nombre = nombre;
-		this.estado = estado;
 		this.equipos = equipos;
 	}
 
@@ -57,15 +54,6 @@ public class GrupoEquipos implements java.io.Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	@Column(name = "estado", nullable = false, length = 10)
-	public String getEstado() {
-		return this.estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "grupoEquipos")

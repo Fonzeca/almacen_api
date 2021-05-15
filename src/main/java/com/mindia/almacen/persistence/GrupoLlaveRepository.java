@@ -15,6 +15,6 @@ public interface GrupoLlaveRepository extends JpaRepository<GrupoLlaves, Integer
 	List<GrupoLlaves> findByNombre(String nombre);
 	
 	@Query("select g from GrupoLlaves g where g.grupoId = ?1 and g.nombre = ?2")
-	List<GrupoLlaves> obtenerByIdentificacion(int id, String nombre);
+	GrupoLlaves obtenerByIdentificacion(int id, String nombre);
 	
 }

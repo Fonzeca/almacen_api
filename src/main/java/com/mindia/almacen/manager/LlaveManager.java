@@ -7,11 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.mindia.almacen.model.GrupoLlaves;
 import com.mindia.almacen.model.Llave;
 import com.mindia.almacen.persistence.GrupoLlaveRepository;
 import com.mindia.almacen.persistence.LlaveRepository;
-import com.mindia.almacen.pojo.LlaveGrupoView;
 import com.mindia.almacen.pojo.LlaveView;
 
 @Service
@@ -52,26 +50,4 @@ public class LlaveManager {
 		
 		llaveRepo.save(llave);
 	}
-	
-	public LlaveGrupoView getGrupoLlaveByIdentificacion(String identificacion) {
-		String[] ident = identificacion.split("-");
-		String nombre = ident[0];
-		String idStr = ident[1];
-		Integer id = Integer.parseInt(idStr);
-		
-		var llave = grupoLlaveRepo.obtenerByIdentificacion(id, nombre);
-		if(llave.size() != 1) {
-			if(llave.size() > 1)
-				throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Id duplicados");
-			if(llave.size() < 1) 
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Llave no encontrada");
-		}
-		
-		GrupoLlaves grLlave = llave.get(0);
-		
-		LlaveGrupoView view = new LlaveGrupoView(grLlave);
-		
-		return view;
-	}
-	
 }
