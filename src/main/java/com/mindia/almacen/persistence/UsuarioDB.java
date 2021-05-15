@@ -36,7 +36,8 @@ public class UsuarioDB {
 		Usuario usuario;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Usuario> query = sess.createQuery("select u from Usuario u where u.nombreUsuario='" + nombre + "'", Usuario.class);
+			Query<Usuario> query = sess.createQuery("select u from Usuario u where u.nombreUsuario='" + nombre + "'",
+					Usuario.class);
 			usuario = query.getSingleResult();
 			Hibernate.initialize(usuario.getArea());
 			Hibernate.initialize(usuario.getArea().getId());
@@ -120,7 +121,7 @@ public class UsuarioDB {
 		Usuario user = new Usuario();
 		try {
 			sess = HibernateUtils.openSession();
-			Query query = sess.createQuery("select u from Usuario u where u.nombre_usuario='" + username + "'");
+			Query query = sess.createQuery("select u from Usuario u where u.nombreusuario='" + username + "'");
 			if (query.uniqueResult() == null) {
 				System.out.println("El usuario ingresado no es correcto.");
 				return false;

@@ -16,7 +16,7 @@ public class SubcategoriaDB {
 		List<Categoria> cats = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Categoria> query = sess.createQuery("select c from Categoria c where c.categoria_id!=null");
+			Query<Categoria> query = sess.createQuery("select c from Categoria c where c.categoriaId!=null");
 			cats = query.getResultList();
 			for (Categoria c : cats) {
 				for (Subcategoria s : c.getSubcategorias()) {
@@ -98,7 +98,7 @@ public class SubcategoriaDB {
 		Categoria c = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Categoria> query = sess.createQuery("select c from Categoria c where c.categoria_id='" + id + "'");
+			Query<Categoria> query = sess.createQuery("select c from Categoria c where c.categoriaId='" + id + "'");
 			c = query.getSingleResult();
 			return c;
 		} finally {

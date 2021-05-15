@@ -41,7 +41,7 @@ public class EstadoPedidoDB {
 		Estadopedido ea = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query query = sess.createQuery("select e from Estadopedido e where e.nombre='" + estado + "'");
+			Query query = sess.createQuery("select e from Estadopedido e where e.nombreEstado='" + estado + "'");
 			ea = (Estadopedido) query.getSingleResult();
 			return ea;
 		} finally {

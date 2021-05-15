@@ -37,7 +37,7 @@ public class RegistroDB {
 		try {
 			sess = HibernateUtils.openSession();
 			Query<Registro> query = sess
-					.createQuery("select r from Registro r where r.entidad_id='" + equipo + "' and r.entidad='equipo'");
+					.createQuery("select r from Registro r where r.entidadId='" + equipo + "' and r.entidad='equipo'");
 			registros = query.getResultList();
 			for (Registro r : registros) {
 				Hibernate.initialize(r.getUsuario());
@@ -105,7 +105,7 @@ public class RegistroDB {
 			sess = HibernateUtils.openSession();
 			for (Equipo e : equipos) {
 
-				Query<Registro> query = sess.createQuery("select r from Registro r where" + " r.entidad_id='"
+				Query<Registro> query = sess.createQuery("select r from Registro r where" + " r.entidadId='"
 						+ e.getEquipoId() + "' and r.entidad='equipo' order by r.fecha desc");
 				query.setMaxResults(1);
 				registros.add(query.getSingleResult());
