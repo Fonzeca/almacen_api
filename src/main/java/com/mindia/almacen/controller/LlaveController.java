@@ -32,7 +32,7 @@ public class LlaveController {
 		llaveManager.changeLlaveStatus(id, entrada);
 	}
 	
-	@GetMapping("/grupoLlave")
+	@GetMapping("/grupoLlaves")
 	public GrupoLlaveView getGrupoLlave(@RequestParam("identificacion") String identificacion) {
 		return grupoManager.getGrupoLlaveByQr(identificacion);
 	}
