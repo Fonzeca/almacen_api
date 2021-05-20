@@ -74,9 +74,9 @@ public class PedidoManager {
 
 	}
 
-	public static void entregarPedido(String id) {
+	public static List<String> entregarPedido(String id) {
 
-		PedidoDB.entregaPedido(toInt(id));
+		return PedidoDB.entregaPedido(toInt(id));
 	}
 
 	public static void eliminarPedido(String id) {

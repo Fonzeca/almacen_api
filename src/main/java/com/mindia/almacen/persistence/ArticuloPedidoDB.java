@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 import com.mindia.almacen.model.Articulo;
 import com.mindia.almacen.model.Pedido;
 import com.mindia.almacen.model.Pedidoxarticulos;
+import com.mindia.almacen.pojo.ActualizarStockAxP;
 
 public class ArticuloPedidoDB {
 
@@ -29,13 +30,15 @@ public class ArticuloPedidoDB {
 
 	}
 
-	public static boolean actualizarStock(Pedido p) {
+	public static ActualizarStockAxP actualizarStock(Pedido p) {
+		ActualizarStockAxP actualizarStock = new ActualizarStockAxP();
 		Session sess = null;
-		List<Integer> pass= new ArrayList<Integer>();
+		List<Integer> pass = new ArrayList<Integer>();
 
 		try {
 			sess = HibernateUtils.openSession();
 			List<Pedidoxarticulos> articulos = getArticulosPedidosByPedido(p.getPedidoId());
+			List<String> articulosFaltantes = new ArrayList<String>();
 			Articulo a = null;
 			Transaction tran = null;
 			for (int i = 0; i < articulos.size(); i++) {
@@ -45,24 +48,28 @@ public class ArticuloPedidoDB {
 					pass.add(0);
 				} else {
 					pass.add(1);
+					articulosFaltantes.add(a.getNombre());
 				}
 			}
+			actualizarStock.setNombreArticuloFaltante(articulosFaltantes);
 			int total = 0;
 			for (int i = 0; i < pass.size(); i++) {
 				total += pass.get(i);
 			}
 			if (total == 0) {
 				for (Pedidoxarticulos pxa : articulos) {
-					tran=sess.beginTransaction();
-					a=pxa.getArticulo();
+					tran = sess.beginTransaction();
+					a = pxa.getArticulo();
 					sess.update(a);
 					a.setStock(a.getStock() - pxa.getCantidad());
 					tran.commit();
-					return true;
+					actualizarStock.setSalida(true);
 
 				}
 			}
-			return false;
+			actualizarStock.setSalida(false);
+			return actualizarStock;
+
 		} finally {
 			sess.close();
 		}

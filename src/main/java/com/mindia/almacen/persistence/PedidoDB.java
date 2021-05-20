@@ -1,6 +1,8 @@
 package com.mindia.almacen.persistence;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -10,6 +12,7 @@ import org.hibernate.query.Query;
 
 import com.mindia.almacen.model.Pedido;
 import com.mindia.almacen.model.Usuario;
+import com.mindia.almacen.pojo.ActualizarStockAxP;
 
 public class PedidoDB {
 	public static void eliminarPedidoById(int id) {
@@ -92,15 +95,16 @@ public class PedidoDB {
 			sess.close();
 		}
 	}
-	public static List<Pedido> getPedidosIndividual(String username){
-		Session sess=null;
-		List<Pedido> p=null;
+
+	public static List<Pedido> getPedidosIndividual(String username) {
+		Session sess = null;
+		List<Pedido> p = null;
 		try {
-			sess=HibernateUtils.openSession();
-			Usuario u=UsuarioDB.getUsuarioByNombreUsuario(username);
-			int id= u.getId();
-			Query<Pedido> query= sess.createQuery("select p from Pedido p where p.usuario='"+id+"'");
-			p=query.getResultList();
+			sess = HibernateUtils.openSession();
+			Usuario u = UsuarioDB.getUsuarioByNombreUsuario(username);
+			int id = u.getId();
+			Query<Pedido> query = sess.createQuery("select p from Pedido p where p.usuario='" + id + "'");
+			p = query.getResultList();
 			for (Pedido pedido : p) {
 				Hibernate.initialize(pedido.getEstadopedido());
 				Hibernate.initialize(pedido.getFecha());
@@ -108,32 +112,41 @@ public class PedidoDB {
 				Hibernate.initialize(pedido.getUsuario());
 				Hibernate.initialize(pedido.getUsuario().getArea());
 			}
+			Collections.reverse(p);
 			return p;
 		} finally {
 			sess.close();
 		}
 	}
 
-	public static void entregaPedido(int ids) {
+	public static List<String> entregaPedido(int ids) {
 		Session sess = null;
 		Pedido p = null;
+		List<String> respuesta = new ArrayList<String>();
 		try {
 			sess = HibernateUtils.openSession();
 			Transaction tran = sess.beginTransaction();
 
 			p = PedidoDB.getPedidoByID(ids);
 			sess.saveOrUpdate(p);
-			if (ArticuloPedidoDB.actualizarStock(p)) {
+			ActualizarStockAxP stockAxP = ArticuloPedidoDB.actualizarStock(p);
+			if (stockAxP.isSalida()) {
 				p.setEstadopedido(EstadoPedidoDB.getEstadoById(2));
-
+				respuesta = null;
 			} else {
 				p.setEstadopedido(EstadoPedidoDB.getEstadoById(3));
-				if (!p.getObservaciones().contains(" ##En espera por falta de stock.")) {
+				if (!p.getObservaciones().contains(" ##En espera por falta de stock")) {
 
-					p.setObservaciones(p.getObservaciones() + " ##En espera por falta de stock.");
+					p.setObservaciones(p.getObservaciones() + " ##En espera por falta de stock de .");
+					for (String a : stockAxP.getNombreArticuloFaltante()) {
+						p.setObservaciones(p.getObservaciones() + a + " - ");
+					}
+
 				}
+				respuesta = stockAxP.getNombreArticuloFaltante();
 			}
 			tran.commit();
+			return respuesta;
 
 		} finally {
 

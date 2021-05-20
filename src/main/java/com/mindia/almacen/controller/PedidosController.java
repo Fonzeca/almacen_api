@@ -65,8 +65,8 @@ public class PedidosController {
 	}
 
 	@GetMapping("/pedido/entregar")
-	public void entregarPedido(@RequestParam("id") String id) {
-		PedidoManager.entregarPedido(id);
+	public List<String> entregarPedido(@RequestParam("id") String id) {
+		return PedidoManager.entregarPedido(id);
 	}
 
 	@GetMapping("/pedido/eliminar")
