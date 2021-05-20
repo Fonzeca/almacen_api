@@ -26,6 +26,9 @@ public class PedidoDetalleView {
 	@SerializedName("pedidos")
 	@Expose
 	private List<ArticuloPedidoView> pedidos = null;
+	@SerializedName("articulosFaltantes")
+	@Expose
+	private List<String> articulosFaltantes;
 
 	public Integer getPedidoId() {
 		return pedidoId;
@@ -65,6 +68,14 @@ public class PedidoDetalleView {
 
 	public void setPedidos(List<ArticuloPedidoView> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public List<String> getArticulosFaltantes() {
+		return articulosFaltantes;
+	}
+
+	public void setArticulosFaltantes(List<String> articulosFaltantes) {
+		this.articulosFaltantes = articulosFaltantes;
 	}
 
 }

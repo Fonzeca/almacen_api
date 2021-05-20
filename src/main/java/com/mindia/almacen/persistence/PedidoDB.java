@@ -11,7 +11,6 @@ import org.hibernate.query.Query;
 
 import com.mindia.almacen.model.Pedido;
 import com.mindia.almacen.model.Usuario;
-import com.mindia.almacen.pojo.ActualizarStockAxP;
 
 public class PedidoDB {
 	public static void eliminarPedidoById(int id) {
@@ -118,7 +117,7 @@ public class PedidoDB {
 		}
 	}
 
-	public static ActualizarStockAxP entregaPedido(int ids) {
+	public static boolean entregaPedido(int ids) {
 		Session sess = null;
 		Pedido p = null;
 		try {
@@ -127,21 +126,18 @@ public class PedidoDB {
 
 			p = PedidoDB.getPedidoByID(ids);
 			sess.saveOrUpdate(p);
-			ActualizarStockAxP stockAxP = ArticuloPedidoDB.actualizarStock(p);
-			if (stockAxP.isSalida()) {
+			if (ArticuloPedidoDB.actualizarStock(p)) {
 				p.setEstadopedido(EstadoPedidoDB.getEstadoById(2));
+				return true;
 			} else {
 				if (p.getEstadopedido().getEstadoPedidoId() != 3) {
 
 					p.setEstadopedido(EstadoPedidoDB.getEstadoById(3));
-					p.setObservaciones(p.getObservaciones() + " ##En espera por falta de stock de .");
-					for (String a : stockAxP.getNombreArticuloFaltante()) {
-						p.setObservaciones(p.getObservaciones() + a + " - ");
-					}
+					p.setObservaciones(p.getObservaciones() + " ##En espera por falta de stock.");
 				}
 			}
 			tran.commit();
-			return stockAxP;
+			return false;
 
 		} finally {
 

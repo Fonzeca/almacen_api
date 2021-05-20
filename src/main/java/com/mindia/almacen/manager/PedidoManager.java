@@ -1,16 +1,17 @@
 package com.mindia.almacen.manager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.mindia.almacen.model.Pedido;
+import com.mindia.almacen.model.Pedidoxarticulos;
 import com.mindia.almacen.persistence.ArticuloPedidoDB;
 import com.mindia.almacen.persistence.EstadoPedidoDB;
 import com.mindia.almacen.persistence.PedidoDB;
 import com.mindia.almacen.persistence.UsuarioDB;
-import com.mindia.almacen.pojo.ActualizarStockAxP;
 import com.mindia.almacen.pojo.ArticuloPedidoView;
 import com.mindia.almacen.pojo.PedidoDetalleView;
 
@@ -30,6 +31,14 @@ public class PedidoManager {
 		var detalles = ArticuloPedidoDB.getArticulosPedidosByPedido(pedidoId);
 
 		var pedido = PedidoDB.getPedidoByID(pedidoId);
+		view.setArticulosFaltantes(new ArrayList<String>());
+		if (pedido.getEstadopedido().getEstadoPedidoId() == 3) {
+			for (Pedidoxarticulos pxa : detalles) {
+				if (pxa.getArticulo().getStock() < pxa.getCantidad()) {
+					view.getArticulosFaltantes().add(pxa.getArticulo().getNombre());
+				}
+			}
+		}
 
 		view.setPedidoId(pedidoId);
 		view.setObservaciones(pedido.getObservaciones());
@@ -75,7 +84,7 @@ public class PedidoManager {
 
 	}
 
-	public static ActualizarStockAxP entregarPedido(String id) {
+	public static boolean entregarPedido(String id) {
 
 		return PedidoDB.entregaPedido(toInt(id));
 	}

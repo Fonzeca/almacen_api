@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mindia.almacen.manager.PedidoManager;
 import com.mindia.almacen.model.Pedido;
-import com.mindia.almacen.pojo.ActualizarStockAxP;
 import com.mindia.almacen.pojo.CreatePedidoRequest;
 import com.mindia.almacen.pojo.PedidoDetalleView;
 import com.mindia.almacen.pojo.PedidoView;
@@ -66,7 +65,7 @@ public class PedidosController {
 	}
 
 	@GetMapping("/pedido/entregar")
-	public ActualizarStockAxP entregarPedido(@RequestParam("id") String id) {
+	public boolean entregarPedido(@RequestParam("id") String id) {
 		return PedidoManager.entregarPedido(id);
 	}
 
