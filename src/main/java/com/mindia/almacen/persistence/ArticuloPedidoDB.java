@@ -33,7 +33,7 @@ public class ArticuloPedidoDB {
 	public static ActualizarStockAxP actualizarStock(Pedido p) {
 		ActualizarStockAxP actualizarStock = new ActualizarStockAxP();
 		Session sess = null;
-		List<Integer> pass = new ArrayList<Integer>();
+		List<Integer> pass= new ArrayList<Integer>();
 
 		try {
 			sess = HibernateUtils.openSession();
@@ -58,8 +58,8 @@ public class ArticuloPedidoDB {
 			}
 			if (total == 0) {
 				for (Pedidoxarticulos pxa : articulos) {
-					tran = sess.beginTransaction();
-					a = pxa.getArticulo();
+					tran=sess.beginTransaction();
+					a=pxa.getArticulo();
 					sess.update(a);
 					a.setStock(a.getStock() - pxa.getCantidad());
 					tran.commit();
@@ -69,7 +69,7 @@ public class ArticuloPedidoDB {
 			}
 			actualizarStock.setSalida(false);
 			return actualizarStock;
-
+			
 		} finally {
 			sess.close();
 		}

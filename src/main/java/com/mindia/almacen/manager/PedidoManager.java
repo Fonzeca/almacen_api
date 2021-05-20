@@ -10,6 +10,7 @@ import com.mindia.almacen.persistence.ArticuloPedidoDB;
 import com.mindia.almacen.persistence.EstadoPedidoDB;
 import com.mindia.almacen.persistence.PedidoDB;
 import com.mindia.almacen.persistence.UsuarioDB;
+import com.mindia.almacen.pojo.ActualizarStockAxP;
 import com.mindia.almacen.pojo.ArticuloPedidoView;
 import com.mindia.almacen.pojo.PedidoDetalleView;
 
@@ -74,7 +75,7 @@ public class PedidoManager {
 
 	}
 
-	public static List<String> entregarPedido(String id) {
+	public static ActualizarStockAxP entregarPedido(String id) {
 
 		return PedidoDB.entregaPedido(toInt(id));
 	}

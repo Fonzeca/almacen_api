@@ -1,7 +1,6 @@
 package com.mindia.almacen.persistence;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -119,10 +118,9 @@ public class PedidoDB {
 		}
 	}
 
-	public static List<String> entregaPedido(int ids) {
+	public static ActualizarStockAxP entregaPedido(int ids) {
 		Session sess = null;
 		Pedido p = null;
-		List<String> respuesta = new ArrayList<String>();
 		try {
 			sess = HibernateUtils.openSession();
 			Transaction tran = sess.beginTransaction();
@@ -132,21 +130,18 @@ public class PedidoDB {
 			ActualizarStockAxP stockAxP = ArticuloPedidoDB.actualizarStock(p);
 			if (stockAxP.isSalida()) {
 				p.setEstadopedido(EstadoPedidoDB.getEstadoById(2));
-				respuesta = null;
 			} else {
-				p.setEstadopedido(EstadoPedidoDB.getEstadoById(3));
-				if (!p.getObservaciones().contains(" ##En espera por falta de stock")) {
+				if (p.getEstadopedido().getEstadoPedidoId() != 3) {
 
+					p.setEstadopedido(EstadoPedidoDB.getEstadoById(3));
 					p.setObservaciones(p.getObservaciones() + " ##En espera por falta de stock de .");
 					for (String a : stockAxP.getNombreArticuloFaltante()) {
 						p.setObservaciones(p.getObservaciones() + a + " - ");
 					}
-
 				}
-				respuesta = stockAxP.getNombreArticuloFaltante();
 			}
 			tran.commit();
-			return respuesta;
+			return stockAxP;
 
 		} finally {
 
