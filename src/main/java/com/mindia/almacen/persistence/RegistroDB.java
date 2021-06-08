@@ -1,7 +1,6 @@
 package com.mindia.almacen.persistence;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -9,39 +8,21 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import com.mindia.almacen.manager.RegistroManager.TIPO_REGISTRO;
 import com.mindia.almacen.model.Equipo;
 import com.mindia.almacen.model.Registro;
-import com.mindia.almacen.model.Usuario;
+
 
 public class RegistroDB {
-	public static void crearRegistro(Equipo e, Usuario actual) {
-		Session sess = null;
-		Transaction tran = null;
-		Registro registro = new Registro();
-		try {
-			sess = HibernateUtils.openSession();
-			tran = sess.beginTransaction();
-			sess.save(registro);
-			registro.setEntrada(true);
-			registro.setFecha(new Date());
-			registro.setUsuario(actual);
-			tran.commit();
-		} finally {
-			sess.close();
-		}
-	}
-
-	public static List<Registro> getRegistrosByEquipo(int equipo) {
+	public static List<Registro> getRegistrosByTipoAndId(TIPO_REGISTRO tipo, int id) {
 		Session sess = null;
 		List<Registro> registros = new ArrayList<Registro>();
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Registro> query = sess
-					.createQuery("select r from Registro r where r.entidadId='" + equipo + "' and r.entidad='equipo'");
+			Query<Registro> query = sess.createQuery("select r from Registro r where r.entidad='" + tipo.label + "' and r.entidadId = '"+ id +"'");
 			registros = query.getResultList();
 			for (Registro r : registros) {
 				Hibernate.initialize(r.getUsuario());
-				Hibernate.initialize(r);
 			}
 			return registros;
 		} finally {
@@ -66,12 +47,12 @@ public class RegistroDB {
 		}
 	}
 
-	public static List<Registro> getRegistros(String entidad) {
+	public static List<Registro> getRegistros() {
 		Session sess = null;
 		List<Registro> registros = new ArrayList<Registro>();
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Registro> query = sess.createQuery("select r from Registro r where r.entidad='" + entidad + "'");
+			Query<Registro> query = sess.createQuery("select r from Registro r");
 			registros = query.getResultList();
 			for (Registro r : registros) {
 				Hibernate.initialize(r);
@@ -96,28 +77,46 @@ public class RegistroDB {
 			sess.close();
 		}
 	}
-
-	public static List<Registro> listarRecursosPorEquipo() {
+	
+	public static Registro getLastRegistroByIdAndTipo(TIPO_REGISTRO tipo, int id) {
 		Session sess = null;
-		List<Registro> registros = new ArrayList<Registro>();
-		List<Equipo> equipos = EquipoDB.getListaEquiposCompleta();
+		Registro registro = null;
 		try {
 			sess = HibernateUtils.openSession();
-			for (Equipo e : equipos) {
-
-				Query<Registro> query = sess.createQuery("select r from Registro r where" + " r.entidadId='"
-						+ e.getEquipoId() + "' and r.entidad='equipo' order by r.fecha desc");
+			
+			Query<Registro> query = sess.createQuery("select r from Registro r where r.entidad='" + tipo.label + "' and r.entidadId = '"+ id +"' order by r.fecha desc");
+			query.setMaxResults(1);
+			
+			registro = query.getSingleResult();
+			
+			Hibernate.initialize(registro.getUsuario());
+			
+			return registro;
+		} finally {
+			sess.close();
+		}
+	}
+	
+	
+	public static List<Registro> listarRecursosPorEquipo() {
+		Session sess=null;
+		List<Registro> registros=new ArrayList<Registro>();
+		List<Equipo> equipos = EquipoDB.getListaEquiposCompleta();
+		try {
+			sess=HibernateUtils.openSession();
+			for(Equipo e:equipos) {
+				
+				Query<Registro> query= sess.createQuery("select r from Registro r where r.entidad = 'Equipo' and r.entidadId='"+e.getEquipoId()+"' order by r.fecha desc");
 				query.setMaxResults(1);
 				registros.add(query.getSingleResult());
 			}
-			for (Registro r : registros) {
+			for(Registro r:registros) {
 				Hibernate.initialize(r.getUsuario().getNombre());
 				Hibernate.initialize(r.getUsuario().getApellido());
 			}
 			return registros;
-		} finally {
+		}finally {
 			sess.close();
 		}
-
 	}
 }

@@ -7,9 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.mindia.almacen.manager.RegistroManager.TIPO_REGISTRO;
 import com.mindia.almacen.model.Llave;
+import com.mindia.almacen.model.Usuario;
 import com.mindia.almacen.persistence.GrupoLlaveRepository;
 import com.mindia.almacen.persistence.LlaveRepository;
+import com.mindia.almacen.persistence.UsuarioDB;
 import com.mindia.almacen.pojo.LlaveView;
 
 @Service
@@ -20,6 +23,10 @@ public class LlaveManager {
 	
 	@Autowired
 	LlaveRepository llaveRepo;
+	
+	@Autowired
+	RegistroManager registroManager;
+	
 
 	public void crearLlave(Llave llave) {
 		llaveRepo.save(llave);
@@ -37,7 +44,7 @@ public class LlaveManager {
 		return llaveView;
 	}
 
-	public void changeLlaveStatus(String id, String entrada) {
+	public void changeLlaveStatus(String id, String entrada, String userName) {
 		//TODO: codigo repetido
 		Llave llave = null;
 		try {
@@ -49,5 +56,13 @@ public class LlaveManager {
 		llave.setEstado(entrada);
 		
 		llaveRepo.save(llave);
+		
+		Usuario user = UsuarioDB.getUsuarioByNombreUsuario(userName);
+		
+		if(entrada.equals("En uso")) {
+			registroManager.createRegistro(false, user.getId(), TIPO_REGISTRO.LLAVE, llave.getLlaveId());
+		}else {
+			registroManager.createRegistro(true, user.getId(), TIPO_REGISTRO.LLAVE, llave.getLlaveId());	
+		}
 	}
 }

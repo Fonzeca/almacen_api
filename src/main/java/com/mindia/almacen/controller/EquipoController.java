@@ -22,6 +22,9 @@ public class EquipoController {
 	
 	@Autowired
 	GrupoManager grupoManager;
+	
+	@Autowired
+	EquipoManager equipoManager;
 
 	@GetMapping("/equipo")
 	public List<EquipoView> getAllEquipos() {
@@ -42,7 +45,7 @@ public class EquipoController {
 
 		String userName = claims.getSubject();
 
-		EquipoManager.changeStatus(userName, id);
+		equipoManager.changeStatus(userName, id);
 	}
 	
 	@GetMapping("/grupoEquipo")

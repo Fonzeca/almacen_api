@@ -1,6 +1,8 @@
 package com.mindia.almacen.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +31,12 @@ public class LlaveController {
 
 	@PutMapping("/llave/status")
 	public void changeLlaveStatus(@RequestParam("id") String id, @RequestParam("entrada") String entrada) {
-		llaveManager.changeLlaveStatus(id, entrada);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		@SuppressWarnings("unchecked")
+		String username = (String) authentication.getPrincipal();
+		
+		llaveManager.changeLlaveStatus(id, entrada, username);
 	}
 	
 	@GetMapping("/grupoLlave")

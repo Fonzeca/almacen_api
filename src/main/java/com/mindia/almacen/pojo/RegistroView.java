@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import com.mindia.almacen.model.Registro;
 
 @Generated("jsonschema2pojo")
-public class RegistroView {
+public class RegistroView implements Comparable<RegistroView>{
 
     @SerializedName("id")
     @Expose
@@ -22,6 +22,25 @@ public class RegistroView {
     @SerializedName("entrada")
     @Expose
     private Boolean entrada;
+    @SerializedName("entidad")
+    @Expose
+    private String entidad;
+    
+    @SerializedName("nombreEquipo")
+    @Expose
+    private String nombreEquipo;
+    
+    @SerializedName("nombreLlave")
+    @Expose
+    private String nombreLlave;
+    
+    @SerializedName("nombreGrupoEquipo")
+    @Expose
+    private String nombreGrupoEquipo;
+    
+    @SerializedName("nombreGrupoLlave")
+    @Expose
+    private String nombreGrupoLlave;
     
     public RegistroView() {
 	}
@@ -31,6 +50,12 @@ public class RegistroView {
     	this.usuario = r.getUsuario().getNombreUsuario();
     	this.fecha = r.getFecha().toString();
     	this.entrada = r.getEntrada();
+    	this.entidad = r.getEntidad();
+    	
+    	this.nombreEquipo = "";
+    	this.nombreGrupoEquipo = "";
+    	this.nombreGrupoLlave = "";
+    	this.nombreLlave = "";
 	}
 
     public Integer getId() {
@@ -64,5 +89,51 @@ public class RegistroView {
     public void setEntrada(Boolean entrada) {
         this.entrada = entrada;
     }
+
+	public String getNombreEquipo() {
+		return nombreEquipo;
+	}
+
+	public void setNombreEquipo(String nombreEquipo) {
+		this.nombreEquipo = nombreEquipo;
+	}
+
+	public String getNombreLlave() {
+		return nombreLlave;
+	}
+
+	public void setNombreLlave(String nombreLlave) {
+		this.nombreLlave = nombreLlave;
+	}
+
+	public String getNombreGrupoEquipo() {
+		return nombreGrupoEquipo;
+	}
+
+	public void setNombreGrupoEquipo(String nombreGrupoEquipo) {
+		this.nombreGrupoEquipo = nombreGrupoEquipo;
+	}
+
+	public String getNombreGrupoLlave() {
+		return nombreGrupoLlave;
+	}
+
+	public void setNombreGrupoLlave(String nombreGrupoLlave) {
+		this.nombreGrupoLlave = nombreGrupoLlave;
+	}
+
+	public String getEntidad() {
+		return entidad;
+	}
+
+	public void setEntidad(String entidad) {
+		this.entidad = entidad;
+	}
+
+	@Override
+	public int compareTo(RegistroView o) {
+		return -this.id.compareTo(o.id);
+	}
+
 
 }

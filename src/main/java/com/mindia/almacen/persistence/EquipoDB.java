@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import com.mindia.almacen.manager.RegistroManager;
 import com.mindia.almacen.model.Equipo;
 
 public class EquipoDB {
@@ -29,23 +28,15 @@ public class EquipoDB {
 		}
 	}
 
-	public static void cambiarEstado(int user, int id) {
+	public static void cambiarEstado(Equipo equipo) {
 		Session sess = null;
 		Transaction tran = null;
-		Equipo e = null;
 		try {
 			sess = HibernateUtils.openSession();
 			tran = sess.beginTransaction();
-			e = sess.get(Equipo.class, id);
-			sess.update(e);
-
-			if (e.getEstado().equals("En Uso")) {
-				RegistroManager.createRegistro(true, user, id);
-				e.setEstado("Disponible");
-			} else {
-				RegistroManager.createRegistro(false, user, id);
-				e.setEstado("En uso");
-			}
+			
+			sess.update(equipo);
+			
 			tran.commit();
 		} finally {
 			sess.close();

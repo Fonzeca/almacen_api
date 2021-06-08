@@ -4,18 +4,25 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mindia.almacen.manager.RegistroManager.TIPO_REGISTRO;
 import com.mindia.almacen.model.Equipo;
 import com.mindia.almacen.model.Usuario;
 import com.mindia.almacen.persistence.EquipoDB;
 import com.mindia.almacen.persistence.LugarDB;
-import com.mindia.almacen.persistence.RegistroDB;
 import com.mindia.almacen.persistence.TipoDB;
 import com.mindia.almacen.persistence.UsuarioDB;
 import com.mindia.almacen.pojo.EquipoView;
 
+@Service
 public class EquipoManager {
 
-	public static void createEquipo(String serial, String nombre, String tipo, String lugar, String modelo,
+	@Autowired
+	RegistroManager registroManager;
+	
+	public void createEquipo(String serial, String nombre, String tipo, String lugar, String modelo,
 			String usuario, String observaciones, String accesorios, Usuario userActual) {
 		Equipo equipo = new Equipo();
 		equipo.setLugar(LugarDB.getLugarByNombre(lugar));
@@ -52,16 +59,26 @@ public class EquipoManager {
 		Equipo e = EquipoDB.getEquipoByID(id);
 		System.out.println(e.getNombre());
 
-		RegistroDB.crearRegistro(e, userActual);
-
+		
+		registroManager.createRegistro(true, userActual.getId(), TIPO_REGISTRO.EQUIPO, e.getEquipoId());
 	}
 
-	public static void changeStatus(String user, int id) {
+	public void changeStatus(String user, int id) {
 		System.out.println("Cambiando el estado del equipo numero " + id);
 
 		Usuario usuario = UsuarioDB.getUsuarioByNombreUsuario(user);
+		
+		Equipo equipo = EquipoDB.getEquipoByID(id);
+		
+		if (equipo.getEstado().equals("En uso")) {
+			registroManager.createRegistro(true, usuario.getId(), TIPO_REGISTRO.EQUIPO, equipo.getEquipoId());
+			equipo.setEstado("Disponible");
+		} else {
+			registroManager.createRegistro(false, usuario.getId(), TIPO_REGISTRO.EQUIPO, equipo.getEquipoId());
+			equipo.setEstado("En uso");
+		}
 
-		EquipoDB.cambiarEstado(usuario.getId(), id);
+		EquipoDB.cambiarEstado(equipo);
 	}
 
 	public static List<EquipoView> listarEquipos() {

@@ -34,10 +34,30 @@ public class GrupoManager {
 		return new GrupoLlaveView(grupoLlave);
 	}
 	
+	public GrupoLlaveView getGrupoLlaveById(int id) {
+		GrupoLlaves grupoLlave = grupoLlaveRepo.getOne(id);
+		
+		if(grupoLlave == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Grupo de llaves no encontrada");
+		}
+		
+		return new GrupoLlaveView(grupoLlave);
+	}
+	
 	public GrupoEquipoView getGrupoEquipoByQr(String identificacion) {
 		QrId qrId = new QrId(identificacion);
 		
 		GrupoEquipos grupoEquipo = grupoEquipoRepo.obtenerByIdentificacion(qrId.id, qrId.value);
+		
+		if(grupoEquipo == null){
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Grupo de equipos no encontrada");
+		}
+		
+		return new GrupoEquipoView(grupoEquipo);
+	}
+	
+	public GrupoEquipoView getGrupoEquipoById(int id) {
+		GrupoEquipos grupoEquipo = grupoEquipoRepo.getOne(id);
 		
 		if(grupoEquipo == null){
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Grupo de equipos no encontrada");
