@@ -128,6 +128,7 @@ public class PedidoDB {
 			sess.saveOrUpdate(p);
 			if (ArticuloPedidoDB.actualizarStock(p)) {
 				p.setEstadopedido(EstadoPedidoDB.getEstadoById(2));
+				tran.commit();
 				return true;
 			} else {
 				if (p.getEstadopedido().getEstadoPedidoId() != 3) {
