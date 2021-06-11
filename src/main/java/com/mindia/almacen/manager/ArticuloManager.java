@@ -19,6 +19,10 @@ public class ArticuloManager {
 		return ArticuloDB.getListadoArticulos();
 	}
 
+	public static List<Articulo> getArticulosStock() {
+		return ArticuloDB.getArticulosEnStock();
+	}
+
 	public static Articulo getArticuloByName(String nombre) {
 		return ArticuloDB.getArticuloByNombre(nombre);
 	}

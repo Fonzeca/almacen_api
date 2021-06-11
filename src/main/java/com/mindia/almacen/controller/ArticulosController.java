@@ -19,7 +19,7 @@ public class ArticulosController {
 	public List<ArticuloView> getAllArticulos() {
 		List<ArticuloView> response = new ArrayList<ArticuloView>();
 
-		for (Articulo art : ArticuloManager.getAllArticulos()) {
+		for (Articulo art : ArticuloManager.getArticulosStock()) {
 			ArticuloView articulo = new ArticuloView();
 
 			articulo.setEstado(art.getEstadoarticulo().getNombreEstado());
