@@ -31,10 +31,10 @@ public class LlaveView {
 	public LlaveView(Llave llave) {
 		this.copia = llave.getCopia();
 		this.estado = llave.getEstado();
-		this.grupo = llave.getGrupoLlaves().getNombre();
+		this.grupo = llave.getGrupoLlaves() == null ? null : llave.getGrupoLlaves().getNombre();
 		this.nombre = llave.getNombre();
 		this.observaciones = llave.getObservaciones();
-		this.ubicacion = llave.getLugar().getNombre();
+		this.ubicacion = llave.getLugar() == null ? null : llave.getLugar().getNombre();
 	}
 
 	public String getNombre() {

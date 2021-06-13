@@ -14,4 +14,7 @@ public interface LlaveRepository extends JpaRepository<Llave, Integer>  {
 	@Query("select l from Llave l where l.llaveId = ?1 and l.nombre = ?2")
 	public List<Llave> obtenerByIdentificacion(int id, String nombre);
 	
+	@Query("select l from Llave l where l.nombre like %?1%")
+	public List<Llave> obtenerLikeNombre(String nombre);
+	
 }
