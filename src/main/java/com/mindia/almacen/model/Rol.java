@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 15-may-2021 19:58:24 by Hibernate Tools 5.2.12.Final
+// Generated 13/06/2021 16:52:59 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +23,6 @@ public class Rol implements java.io.Serializable {
 	private Integer id;
 	private String nombre;
 	private Set<Usuario> usuarios = new HashSet<Usuario>(0);
-	private Set<Usuario> usuarios_1 = new HashSet<Usuario>(0);
 
 	public Rol() {
 	}
@@ -32,10 +31,9 @@ public class Rol implements java.io.Serializable {
 		this.nombre = nombre;
 	}
 
-	public Rol(String nombre, Set<Usuario> usuarios, Set<Usuario> usuarios_1) {
+	public Rol(String nombre, Set<Usuario> usuarios) {
 		this.nombre = nombre;
 		this.usuarios = usuarios;
-		this.usuarios_1 = usuarios_1;
 	}
 
 	@Id
@@ -66,15 +64,6 @@ public class Rol implements java.io.Serializable {
 
 	public void setUsuarios(Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rol")
-	public Set<Usuario> getUsuarios_1() {
-		return this.usuarios_1;
-	}
-
-	public void setUsuarios_1(Set<Usuario> usuarios_1) {
-		this.usuarios_1 = usuarios_1;
 	}
 
 }

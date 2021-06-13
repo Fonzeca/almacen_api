@@ -101,7 +101,7 @@ public class ArticuloDB {
 		List<Articulo> articulos = null;
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.estadoArticulo.estadoArticuloId = 1",
+			Query<Articulo> query = sess.createQuery("select a from Articulo a where a.estado.estado_articulo_id = 1",
 					Articulo.class);
 			articulos = query.getResultList();
 			for (Articulo a : articulos) {

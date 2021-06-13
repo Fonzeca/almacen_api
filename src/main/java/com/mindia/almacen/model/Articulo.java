@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 15-may-2021 19:58:24 by Hibernate Tools 5.2.12.Final
+// Generated 13/06/2021 16:52:59 by Hibernate Tools 5.2.12.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -35,7 +35,6 @@ public class Articulo implements java.io.Serializable {
 	private int stock;
 	private String codigoQr;
 	private Set<Pedidoxarticulos> pedidoxarticuloses = new HashSet<Pedidoxarticulos>(0);
-	private Set<Pedidoxarticulos> pedidoxarticuloses_1 = new HashSet<Pedidoxarticulos>(0);
 
 	public Articulo() {
 	}
@@ -54,7 +53,7 @@ public class Articulo implements java.io.Serializable {
 
 	public Articulo(Estadoarticulo estadoarticulo, Proveedor proveedor, Subcategoria subcategoria, String nombre,
 			double costo, Date fechaAgregado, int stockMinimo, int stock, String codigoQr,
-			Set<Pedidoxarticulos> pedidoxarticuloses, Set<Pedidoxarticulos> pedidoxarticuloses_1) {
+			Set<Pedidoxarticulos> pedidoxarticuloses) {
 		this.estadoarticulo = estadoarticulo;
 		this.proveedor = proveedor;
 		this.subcategoria = subcategoria;
@@ -65,7 +64,6 @@ public class Articulo implements java.io.Serializable {
 		this.stock = stock;
 		this.codigoQr = codigoQr;
 		this.pedidoxarticuloses = pedidoxarticuloses;
-		this.pedidoxarticuloses_1 = pedidoxarticuloses_1;
 	}
 
 	@Id
@@ -128,8 +126,8 @@ public class Articulo implements java.io.Serializable {
 		this.costo = costo;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "fecha_agregado", nullable = false, length = 10)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "fecha_agregado", nullable = false, length = 19)
 	public Date getFechaAgregado() {
 		return this.fechaAgregado;
 	}
@@ -172,15 +170,6 @@ public class Articulo implements java.io.Serializable {
 
 	public void setPedidoxarticuloses(Set<Pedidoxarticulos> pedidoxarticuloses) {
 		this.pedidoxarticuloses = pedidoxarticuloses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
-	public Set<Pedidoxarticulos> getPedidoxarticuloses_1() {
-		return this.pedidoxarticuloses_1;
-	}
-
-	public void setPedidoxarticuloses_1(Set<Pedidoxarticulos> pedidoxarticuloses_1) {
-		this.pedidoxarticuloses_1 = pedidoxarticuloses_1;
 	}
 
 }

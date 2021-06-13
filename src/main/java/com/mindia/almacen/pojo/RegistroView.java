@@ -47,7 +47,7 @@ public class RegistroView implements Comparable<RegistroView>{
     
     public RegistroView(Registro r) {
     	this.id = r.getId();
-    	this.usuario = r.getUsuario().getNombreUsuario();
+    	this.usuario = r.getUsuarioByUsuario().getNombreUsuario();
     	this.fecha = r.getFecha().toString();
     	this.entrada = r.getEntrada();
     	this.entidad = r.getEntidad();

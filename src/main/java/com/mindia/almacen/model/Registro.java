@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 15-may-2021 19:58:24 by Hibernate Tools 5.2.12.Final
+// Generated 13/06/2021 16:52:59 by Hibernate Tools 5.2.12.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,7 +22,8 @@ import javax.persistence.TemporalType;
 public class Registro implements java.io.Serializable {
 
 	private Integer id;
-	private Usuario usuario;
+	private Usuario usuarioByUsuario;
+	private Usuario usuarioByEncargado;
 	private Date fecha;
 	private Boolean entrada;
 	private int entidadId;
@@ -36,8 +37,10 @@ public class Registro implements java.io.Serializable {
 		this.entidad = entidad;
 	}
 
-	public Registro(Usuario usuario, Date fecha, Boolean entrada, int entidadId, String entidad) {
-		this.usuario = usuario;
+	public Registro(Usuario usuarioByUsuario, Usuario usuarioByEncargado, Date fecha, Boolean entrada, int entidadId,
+			String entidad) {
+		this.usuarioByUsuario = usuarioByUsuario;
+		this.usuarioByEncargado = usuarioByEncargado;
 		this.fecha = fecha;
 		this.entrada = entrada;
 		this.entidadId = entidadId;
@@ -58,16 +61,26 @@ public class Registro implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario")
-	public Usuario getUsuario() {
-		return this.usuario;
+	public Usuario getUsuarioByUsuario() {
+		return this.usuarioByUsuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarioByUsuario(Usuario usuarioByUsuario) {
+		this.usuarioByUsuario = usuarioByUsuario;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "fecha", length = 10)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "encargado")
+	public Usuario getUsuarioByEncargado() {
+		return this.usuarioByEncargado;
+	}
+
+	public void setUsuarioByEncargado(Usuario usuarioByEncargado) {
+		this.usuarioByEncargado = usuarioByEncargado;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "fecha", length = 19)
 	public Date getFecha() {
 		return this.fecha;
 	}
