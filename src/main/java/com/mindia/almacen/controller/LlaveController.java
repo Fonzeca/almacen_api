@@ -1,5 +1,7 @@
 package com.mindia.almacen.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,16 +15,14 @@ import com.mindia.almacen.manager.LlaveManager;
 import com.mindia.almacen.pojo.GrupoLlaveView;
 import com.mindia.almacen.pojo.LlaveView;
 
-
 @RestController
 public class LlaveController {
-	
+
 	@Autowired
 	LlaveManager llaveManager;
-	
+
 	@Autowired
 	GrupoManager grupoManager;
-	
 
 	@GetMapping("/llave")
 	public LlaveView getLlave(@RequestParam("id") String id) {
@@ -35,10 +35,15 @@ public class LlaveController {
 
 		@SuppressWarnings("unchecked")
 		String username = (String) authentication.getPrincipal();
-		
+
 		llaveManager.changeLlaveStatus(id, entrada, username);
 	}
-	
+
+	@GetMapping("/llave/getPosesion")
+	public List<LlaveView> getLlavesEnPosesion() {
+		return llaveManager.getLlavesEnUso();
+	}
+
 	@GetMapping("/grupoLlave")
 	public GrupoLlaveView getGrupoLlave(@RequestParam("identificacion") String identificacion) {
 		return grupoManager.getGrupoLlaveByQr(identificacion);

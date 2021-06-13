@@ -1,11 +1,16 @@
 package com.mindia.almacen.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.mindia.almacen.manager.RegistroManager;
+import com.mindia.almacen.manager.RegistroManager.TIPO_REGISTRO;
 import com.mindia.almacen.model.Llave;
 
 public class LlaveView {
-	
+
 	@SerializedName("llaveId")
 	@Expose
 	private Integer llaveId;
@@ -27,6 +32,9 @@ public class LlaveView {
 	@SerializedName("ubicacion")
 	@Expose
 	private String ubicacion;
+	@SerializedName("usuario")
+	@Expose
+	private String usuario;
 
 	public LlaveView(Llave llave) {
 		this.copia = llave.getCopia();
@@ -35,6 +43,9 @@ public class LlaveView {
 		this.nombre = llave.getNombre();
 		this.observaciones = llave.getObservaciones();
 		this.ubicacion = llave.getLugar().getNombre();
+		List<Integer> ids = new ArrayList<Integer>(llave.getLlaveId());
+		this.usuario = RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.LLAVE, ids).get(0).getUsuario()
+				.getNombreUsuario();
 	}
 
 	public String getNombre() {
