@@ -29,6 +29,7 @@ public class LlaveView {
 	private String ubicacion;
 
 	public LlaveView(Llave llave) {
+		this.llaveId = llave.getLlaveId();
 		this.copia = llave.getCopia();
 		this.estado = llave.getEstado();
 		this.grupo = llave.getGrupoLlaves() == null ? null : llave.getGrupoLlaves().getNombre();
