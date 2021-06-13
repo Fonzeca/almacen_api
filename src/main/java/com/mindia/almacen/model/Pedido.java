@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 15-may-2021 19:58:24 by Hibernate Tools 5.2.12.Final
+// Generated 13/06/2021 16:52:59 by Hibernate Tools 5.2.12.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -30,7 +30,6 @@ public class Pedido implements java.io.Serializable {
 	private Date fecha;
 	private String observaciones;
 	private Set<Pedidoxarticulos> pedidoxarticuloses = new HashSet<Pedidoxarticulos>(0);
-	private Set<Pedidoxarticulos> pedidoxarticuloses_1 = new HashSet<Pedidoxarticulos>(0);
 
 	public Pedido() {
 	}
@@ -42,13 +41,12 @@ public class Pedido implements java.io.Serializable {
 	}
 
 	public Pedido(Estadopedido estadopedido, Usuario usuario, Date fecha, String observaciones,
-			Set<Pedidoxarticulos> pedidoxarticuloses, Set<Pedidoxarticulos> pedidoxarticuloses_1) {
+			Set<Pedidoxarticulos> pedidoxarticuloses) {
 		this.estadopedido = estadopedido;
 		this.usuario = usuario;
 		this.fecha = fecha;
 		this.observaciones = observaciones;
 		this.pedidoxarticuloses = pedidoxarticuloses;
-		this.pedidoxarticuloses_1 = pedidoxarticuloses_1;
 	}
 
 	@Id
@@ -83,8 +81,8 @@ public class Pedido implements java.io.Serializable {
 		this.usuario = usuario;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "fecha", nullable = false, length = 10)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "fecha", nullable = false, length = 19)
 	public Date getFecha() {
 		return this.fecha;
 	}
@@ -109,15 +107,6 @@ public class Pedido implements java.io.Serializable {
 
 	public void setPedidoxarticuloses(Set<Pedidoxarticulos> pedidoxarticuloses) {
 		this.pedidoxarticuloses = pedidoxarticuloses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
-	public Set<Pedidoxarticulos> getPedidoxarticuloses_1() {
-		return this.pedidoxarticuloses_1;
-	}
-
-	public void setPedidoxarticuloses_1(Set<Pedidoxarticulos> pedidoxarticuloses_1) {
-		this.pedidoxarticuloses_1 = pedidoxarticuloses_1;
 	}
 
 }

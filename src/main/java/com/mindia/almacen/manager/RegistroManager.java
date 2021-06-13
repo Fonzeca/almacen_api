@@ -58,7 +58,7 @@ public class RegistroManager {
 		
 		//Traemos el user 
 		Usuario usuario = UsuarioDB.getUsuarioByID(user);
-		registro.setUsuario(usuario);
+		registro.setUsuarioByUsuario(usuario);
 		
 		Object entidad = null;
 		

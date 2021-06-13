@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 15-may-2021 19:58:24 by Hibernate Tools 5.2.12.Final
+// Generated 13/06/2021 16:52:59 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,9 +31,9 @@ public class Usuario implements java.io.Serializable {
 	private String email;
 	private boolean activo;
 	private Set<Equipo> equipos = new HashSet<Equipo>(0);
-	private Set<Registro> registros = new HashSet<Registro>(0);
+	private Set<Registro> registrosForUsuario = new HashSet<Registro>(0);
+	private Set<Registro> registrosForEncargado = new HashSet<Registro>(0);
 	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
-	private Set<Pedido> pedidos_1 = new HashSet<Pedido>(0);
 	private Set<Area> areas = new HashSet<Area>(0);
 
 	public Usuario() {
@@ -51,8 +51,8 @@ public class Usuario implements java.io.Serializable {
 	}
 
 	public Usuario(Area area, Rol rol, String nombreUsuario, String nombre, String apellido, String email,
-			boolean activo, Set<Equipo> equipos, Set<Registro> registros, Set<Pedido> pedidos, Set<Pedido> pedidos_1,
-			Set<Area> areas) {
+			boolean activo, Set<Equipo> equipos, Set<Registro> registrosForUsuario, Set<Registro> registrosForEncargado,
+			Set<Pedido> pedidos, Set<Area> areas) {
 		this.area = area;
 		this.rol = rol;
 		this.nombreUsuario = nombreUsuario;
@@ -61,9 +61,9 @@ public class Usuario implements java.io.Serializable {
 		this.email = email;
 		this.activo = activo;
 		this.equipos = equipos;
-		this.registros = registros;
+		this.registrosForUsuario = registrosForUsuario;
+		this.registrosForEncargado = registrosForEncargado;
 		this.pedidos = pedidos;
-		this.pedidos_1 = pedidos_1;
 		this.areas = areas;
 	}
 
@@ -153,13 +153,22 @@ public class Usuario implements java.io.Serializable {
 		this.equipos = equipos;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	public Set<Registro> getRegistros() {
-		return this.registros;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioByUsuario")
+	public Set<Registro> getRegistrosForUsuario() {
+		return this.registrosForUsuario;
 	}
 
-	public void setRegistros(Set<Registro> registros) {
-		this.registros = registros;
+	public void setRegistrosForUsuario(Set<Registro> registrosForUsuario) {
+		this.registrosForUsuario = registrosForUsuario;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioByEncargado")
+	public Set<Registro> getRegistrosForEncargado() {
+		return this.registrosForEncargado;
+	}
+
+	public void setRegistrosForEncargado(Set<Registro> registrosForEncargado) {
+		this.registrosForEncargado = registrosForEncargado;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
@@ -169,15 +178,6 @@ public class Usuario implements java.io.Serializable {
 
 	public void setPedidos(Set<Pedido> pedidos) {
 		this.pedidos = pedidos;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	public Set<Pedido> getPedidos_1() {
-		return this.pedidos_1;
-	}
-
-	public void setPedidos_1(Set<Pedido> pedidos_1) {
-		this.pedidos_1 = pedidos_1;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")

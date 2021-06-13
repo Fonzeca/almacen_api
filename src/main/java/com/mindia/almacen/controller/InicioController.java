@@ -58,13 +58,13 @@ public class InicioController {
 								.map(GrantedAuthority::getAuthority)
 								.collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 600000))
+				.setExpiration(new Date(System.currentTimeMillis() + 2678400000l))
 				.signWith(SignatureAlgorithm.HS512,
 						secretKey.getBytes()).compact();
 
 		Token token = new Token();
 		token.setId(id);
-		token.setExpireAt(""+ (System.currentTimeMillis() + 600000));
+		token.setExpireAt(""+ (System.currentTimeMillis() + 2678400000l));
 		token.setToken(tokenStr);
 		
 		return token;

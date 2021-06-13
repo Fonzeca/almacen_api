@@ -16,4 +16,8 @@ public interface LlaveRepository extends JpaRepository<Llave, Integer> {
 
 	@Query("select l from Llave l where l.estado = 'En uso'")
 	public List<Llave> llavesEnUso();
+	
+	@Query("select l from Llave l where l.nombre like %?1%")
+	public List<Llave> obtenerLikeNombre(String nombre);
+	
 }

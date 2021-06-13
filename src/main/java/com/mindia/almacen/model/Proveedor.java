@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 15-may-2021 19:58:24 by Hibernate Tools 5.2.12.Final
+// Generated 13/06/2021 16:52:59 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +26,6 @@ public class Proveedor implements java.io.Serializable {
 	private String direccion;
 	private String mail;
 	private Set<Articulo> articulos = new HashSet<Articulo>(0);
-	private Set<Articulo> articulos_1 = new HashSet<Articulo>(0);
 
 	public Proveedor() {
 	}
@@ -40,14 +39,13 @@ public class Proveedor implements java.io.Serializable {
 	}
 
 	public Proveedor(String nombre, String telefono, String contacto, String direccion, String mail,
-			Set<Articulo> articulos, Set<Articulo> articulos_1) {
+			Set<Articulo> articulos) {
 		this.nombre = nombre;
 		this.telefono = telefono;
 		this.contacto = contacto;
 		this.direccion = direccion;
 		this.mail = mail;
 		this.articulos = articulos;
-		this.articulos_1 = articulos_1;
 	}
 
 	@Id
@@ -114,15 +112,6 @@ public class Proveedor implements java.io.Serializable {
 
 	public void setArticulos(Set<Articulo> articulos) {
 		this.articulos = articulos;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
-	public Set<Articulo> getArticulos_1() {
-		return this.articulos_1;
-	}
-
-	public void setArticulos_1(Set<Articulo> articulos_1) {
-		this.articulos_1 = articulos_1;
 	}
 
 }
