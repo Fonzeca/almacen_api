@@ -45,7 +45,8 @@ public class LlaveView {
 		this.observaciones = llave.getObservaciones();
 		this.ubicacion = llave.getLugar() == null ? null : llave.getLugar().getNombre();
 		this.ubicacion = llave.getLugar().getNombre();
-		List<Integer> ids = new ArrayList<Integer>(llave.getLlaveId());
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(llave.getLlaveId());
 		this.usuario = RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.LLAVE, ids).get(0)
 				.getUsuarioByUsuario().getNombreUsuario();
 	}
