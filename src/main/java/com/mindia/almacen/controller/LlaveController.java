@@ -45,11 +45,16 @@ public class LlaveController {
 		return llaveManager.getLlavesEnUso();
 	}
 
+	@GetMapping("/llave/getPosesionDe")
+	public List<LlaveView> getLlavesEnPosesionDe(@RequestParam("idUser") String idUser) {
+		return llaveManager.getLlavesEnUsoDe(idUser);
+	}
+
 	@GetMapping("/grupoLlave")
 	public GrupoLlaveView getGrupoLlave(@RequestParam("identificacion") String identificacion) {
 		return grupoManager.getGrupoLlaveByQr(identificacion);
 	}
-	
+
 	@GetMapping("/llave/like/{nombre}")
 	public List<LlaveView> getLlaveLike(@PathVariable("nombre") String nombre) {
 		return llaveManager.getLlavesLikeNombre(nombre);

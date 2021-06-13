@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.mindia.almacen.manager.RegistroManager.TIPO_REGISTRO;
 import com.mindia.almacen.model.Llave;
+import com.mindia.almacen.model.Registro;
 import com.mindia.almacen.model.Usuario;
 import com.mindia.almacen.persistence.GrupoLlaveRepository;
 import com.mindia.almacen.persistence.LlaveRepository;
@@ -92,5 +93,23 @@ public class LlaveManager {
 			llaves.add(llaveView);
 		}
 		return llaves;
+	}
+
+	public List<LlaveView> getLlavesEnUsoDe(String idUser) {
+		Integer id = Integer.parseInt(idUser);
+		List<LlaveView> llaveViews = new ArrayList<LlaveView>();
+		List<Llave> llaves = llaveRepo.llavesEnUso();
+		List<Integer> ids = new ArrayList();
+		for (Llave llave : llaves) {
+			ids.add(llave.getLlaveId());
+		}
+		List<Registro> registros = RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.LLAVE, ids);
+		for (int i = 0; i < registros.size(); i++) {
+			if (registros.get(i).getUsuarioByUsuario().getId() == id) {
+				LlaveView llaveView = new LlaveView(llaves.get(i));
+				llaveViews.add(llaveView);
+			}
+		}
+		return llaveViews;
 	}
 }
