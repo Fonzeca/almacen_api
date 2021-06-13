@@ -107,4 +107,12 @@ public class LlaveView {
 		this.llaveId = llaveId;
 	}
 
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
 }
