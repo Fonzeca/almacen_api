@@ -1,6 +1,7 @@
 package com.mindia.almacen.manager;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,6 @@ import com.mindia.almacen.persistence.GrupoLlaveRepository;
 import com.mindia.almacen.persistence.LlaveRepository;
 import com.mindia.almacen.persistence.UsuarioDB;
 import com.mindia.almacen.pojo.LlaveView;
-
 
 @Service
 public class LlaveManager {
@@ -46,20 +46,20 @@ public class LlaveManager {
 		LlaveView llaveView = new LlaveView(llave);
 		return llaveView;
 	}
-	
+
 	public List<LlaveView> getLlavesLikeNombre(String nombre) {
 		List<Llave> llaves = null;
-		
-		if(!StringUtils.hasText(nombre)) {
+
+		if (!StringUtils.hasText(nombre)) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Llave no encontrada");
 		}
-		
+
 		try {
 			llaves = llaveRepo.obtenerLikeNombre(nombre);
 		} catch (NoSuchElementException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Llave no encontrada");
 		}
-		
+
 		return llaves.stream().map(x -> new LlaveView(x)).collect(Collectors.toList());
 	}
 
