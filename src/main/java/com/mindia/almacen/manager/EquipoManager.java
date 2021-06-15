@@ -21,9 +21,9 @@ public class EquipoManager {
 
 	@Autowired
 	RegistroManager registroManager;
-	
-	public void createEquipo(String serial, String nombre, String tipo, String lugar, String modelo,
-			String usuario, String observaciones, String accesorios, Usuario userActual) {
+
+	public void createEquipo(String serial, String nombre, String tipo, String lugar, String modelo, String usuario,
+			String observaciones, String accesorios, Usuario userActual) {
 		Equipo equipo = new Equipo();
 		equipo.setLugar(LugarDB.getLugarByNombre(lugar));
 		equipo.setTipo(TipoDB.getTipoByNombre(tipo));
@@ -59,22 +59,21 @@ public class EquipoManager {
 		Equipo e = EquipoDB.getEquipoByID(id);
 		System.out.println(e.getNombre());
 
-		
-		registroManager.createRegistro(true, userActual.getId(), TIPO_REGISTRO.EQUIPO, e.getEquipoId());
+		registroManager.createRegistro(true, userActual.getId(), TIPO_REGISTRO.EQUIPO, e.getEquipoId(), null);
 	}
 
 	public void changeStatus(String user, int id) {
 		System.out.println("Cambiando el estado del equipo numero " + id);
 
 		Usuario usuario = UsuarioDB.getUsuarioByNombreUsuario(user);
-		
+
 		Equipo equipo = EquipoDB.getEquipoByID(id);
-		
+
 		if (equipo.getEstado().equals("En uso")) {
-			registroManager.createRegistro(true, usuario.getId(), TIPO_REGISTRO.EQUIPO, equipo.getEquipoId());
+			registroManager.createRegistro(true, usuario.getId(), TIPO_REGISTRO.EQUIPO, equipo.getEquipoId(), null);
 			equipo.setEstado("Disponible");
 		} else {
-			registroManager.createRegistro(false, usuario.getId(), TIPO_REGISTRO.EQUIPO, equipo.getEquipoId());
+			registroManager.createRegistro(false, usuario.getId(), TIPO_REGISTRO.EQUIPO, equipo.getEquipoId(), null);
 			equipo.setEstado("En uso");
 		}
 

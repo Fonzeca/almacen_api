@@ -31,13 +31,14 @@ public class LlaveController {
 	}
 
 	@PutMapping("/llave/status")
-	public void changeLlaveStatus(@RequestParam("id") String id, @RequestParam("entrada") String entrada) {
+	public void changeLlaveStatus(@RequestParam("id") String id, @RequestParam("username") String username,
+			@RequestParam("entrada") String entrada) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		@SuppressWarnings("unchecked")
-		String username = (String) authentication.getPrincipal();
+		String guardia = (String) authentication.getPrincipal();
 
-		llaveManager.changeLlaveStatus(id, entrada, username);
+		llaveManager.changeLlaveStatus(id, entrada, username, guardia);
 	}
 
 	@GetMapping("/llave/getPosesion")
@@ -50,14 +51,24 @@ public class LlaveController {
 		return llaveManager.getLlavesEnUsoDe(idUser);
 	}
 
-	@GetMapping("/grupoLlave")
-	public GrupoLlaveView getGrupoLlave(@RequestParam("identificacion") String identificacion) {
-		return grupoManager.getGrupoLlaveByQr(identificacion);
-	}
-
 	@GetMapping("/llave/like/{nombre}")
 	public List<LlaveView> getLlaveLike(@PathVariable("nombre") String nombre) {
 		return llaveManager.getLlavesLikeNombre(nombre);
 	}
 
+	@GetMapping("/grupoLlave")
+	public GrupoLlaveView getGrupoLlave(@RequestParam("identificacion") String identificacion) {
+		return grupoManager.getGrupoLlaveByQr(identificacion);
+	}
+
+	@GetMapping("/grupoLlave/status")
+	public void changeGrupoStatus(@RequestParam("id") String id, @RequestParam("entrada") String entrada,
+			@RequestParam("username") String username) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		@SuppressWarnings("unchecked")
+		String guardia = (String) authentication.getPrincipal();
+
+		grupoManager.changeStatus(id, entrada, username, guardia);
+	}
 }

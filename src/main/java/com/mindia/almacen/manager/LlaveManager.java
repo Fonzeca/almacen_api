@@ -64,7 +64,7 @@ public class LlaveManager {
 		return llaves.stream().map(x -> new LlaveView(x)).collect(Collectors.toList());
 	}
 
-	public void changeLlaveStatus(String id, String entrada, String userName) {
+	public void changeLlaveStatus(String id, String entrada, String userName, String guardia) {
 		// TODO: codigo repetido
 		Llave llave = null;
 		try {
@@ -78,11 +78,15 @@ public class LlaveManager {
 		llaveRepo.save(llave);
 
 		Usuario user = UsuarioDB.getUsuarioByNombreUsuario(userName);
+		Usuario encargado = null;
+		if (StringUtils.hasText(guardia)) {
+			encargado = UsuarioDB.getUsuarioByNombreUsuario(guardia);
+		}
 
 		if (entrada.equals("En uso")) {
-			registroManager.createRegistro(false, user.getId(), TIPO_REGISTRO.LLAVE, llave.getLlaveId());
+			registroManager.createRegistro(false, user.getId(), TIPO_REGISTRO.LLAVE, llave.getLlaveId(), encargado);
 		} else {
-			registroManager.createRegistro(true, user.getId(), TIPO_REGISTRO.LLAVE, llave.getLlaveId());
+			registroManager.createRegistro(true, user.getId(), TIPO_REGISTRO.LLAVE, llave.getLlaveId(), encargado);
 		}
 	}
 
