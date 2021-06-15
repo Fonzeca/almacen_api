@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mindia.almacen.manager.RegistroManager.TIPO_REGISTRO;
+import com.mindia.almacen.model.Equipo;
 import com.mindia.almacen.model.GrupoEquipos;
 import com.mindia.almacen.model.GrupoLlaves;
 import com.mindia.almacen.model.Llave;
@@ -31,6 +32,9 @@ public class GrupoManager {
 
 	@Autowired
 	LlaveManager llaveManager;
+
+	@Autowired
+	EquipoManager equipoManager;
 
 	public GrupoLlaveView getGrupoLlaveByQr(String identificacion) {
 		QrId qrId = new QrId(identificacion);
@@ -76,20 +80,28 @@ public class GrupoManager {
 		return new GrupoEquipoView(grupoEquipo);
 	}
 
-	public void changeStatus(String id, String entrada, String username, String guardia) {
-		GrupoLlaves grupoLlaves = grupoLlaveRepo.getOne(Integer.parseInt(id));
-		for (Llave llave : grupoLlaves.getLlaves()) {
-			llaveManager.changeLlaveStatus(llave.getLlaveId().toString(), entrada, username, guardia);
+	public void changeStatus(String id, String entrada, String username, String guardia, TIPO_REGISTRO tipo) {
+		if (tipo == TIPO_REGISTRO.GRUPO_EQUIPO) {
+			GrupoEquipos grupo = grupoEquipoRepo.getOne(Integer.parseInt(id));
+			for (Equipo equipo : grupo.getEquipos()) {
+				equipoManager.changeStatus(username, equipo.getEquipoId());
+			}
+			grupoEquipoRepo.save(grupo);
+		} else if (tipo == TIPO_REGISTRO.GRUPO_LLAVE) {
+			GrupoLlaves grupoLlaves = grupoLlaveRepo.getOne(Integer.parseInt(id));
+			for (Llave llave : grupoLlaves.getLlaves()) {
+				llaveManager.changeLlaveStatus(llave.getLlaveId().toString(), entrada, username, guardia);
+			}
+			grupoLlaveRepo.save(grupoLlaves);
 		}
 		Usuario encargado = UsuarioDB.getUsuarioByNombreUsuario(guardia);
 		int idEntidad = Integer.parseInt(id);
 		int user = UsuarioDB.getUsuarioByNombreUsuario(username).getId();
 		if (entrada.equals("En uso")) {
-			registroManager.createRegistro(false, user, TIPO_REGISTRO.GRUPO_LLAVE, idEntidad, encargado);
+			registroManager.createRegistro(false, user, tipo, idEntidad, encargado);
 		} else {
-			registroManager.createRegistro(true, user, TIPO_REGISTRO.GRUPO_LLAVE, idEntidad, encargado);
+			registroManager.createRegistro(true, user, tipo, idEntidad, encargado);
 		}
-		grupoLlaveRepo.save(grupoLlaves);
 	}
 
 }

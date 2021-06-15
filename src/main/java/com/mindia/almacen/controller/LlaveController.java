@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mindia.almacen.manager.GrupoManager;
 import com.mindia.almacen.manager.LlaveManager;
+import com.mindia.almacen.manager.RegistroManager.TIPO_REGISTRO;
 import com.mindia.almacen.pojo.GrupoLlaveView;
 import com.mindia.almacen.pojo.LlaveView;
 
@@ -69,6 +70,6 @@ public class LlaveController {
 		@SuppressWarnings("unchecked")
 		String guardia = (String) authentication.getPrincipal();
 
-		grupoManager.changeStatus(id, entrada, username, guardia);
+		grupoManager.changeStatus(id, entrada, username, guardia, TIPO_REGISTRO.GRUPO_LLAVE);
 	}
 }
