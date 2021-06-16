@@ -10,6 +10,6 @@ import com.mindia.almacen.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-	@Query("select u from Usuario l where l.nombre like %?1%")
+	@Query("select u from Usuario u where u.nombre like %?1%")
 	public List<Usuario> obtenerLikeNombre(String nombre);
 }
