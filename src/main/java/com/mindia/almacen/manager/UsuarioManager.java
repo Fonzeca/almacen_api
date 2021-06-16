@@ -1,6 +1,15 @@
 package com.mindia.almacen.manager;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mindia.almacen.JWTAuthorizationFilter;
 import com.mindia.almacen.model.Area;
@@ -9,26 +18,31 @@ import com.mindia.almacen.model.Usuario;
 import com.mindia.almacen.persistence.AreaDB;
 import com.mindia.almacen.persistence.RolDB;
 import com.mindia.almacen.persistence.UsuarioDB;
+import com.mindia.almacen.persistence.UsuarioRepository;
 import com.mindia.almacen.pojo.LoggedUser;
 
 import io.jsonwebtoken.Claims;
 
+@Service
 public class UsuarioManager {
-	
+
+	@Autowired
+	UsuarioRepository repo;
+
 	public static List<Usuario> obtenerUsuariosActivos() {
 		return UsuarioDB.getUsersActivos();
 	}
-	
+
 	public static LoggedUser getLoggedUser(String token) {
 		String prefix = "Bearer ";
 		token = token.replace(prefix, "");
-		
+
 		Claims claims = JWTAuthorizationFilter.validateToken(token);
-		
+
 		String userName = claims.getSubject();
-		
+
 		Usuario usuario = UsuarioDB.getUsuarioByNombreUsuario(userName);
-		
+
 		LoggedUser loggedUser = new LoggedUser();
 		loggedUser.setApellido(usuario.getApellido());
 		loggedUser.setEmail(usuario.getEmail());
@@ -36,7 +50,7 @@ public class UsuarioManager {
 		loggedUser.setNombre(usuario.getNombre());
 		loggedUser.setNombreUsuario(usuario.getNombreUsuario());
 		loggedUser.setRol(usuario.getRol().getNombre());
-		
+
 		return loggedUser;
 	}
 
@@ -61,9 +75,9 @@ public class UsuarioManager {
 	}
 
 	public static boolean validarCredenciales(String username, String pass) {
-		if(username.equals("root") && pass.equals("almacen.C12")) {
+		if (username.equals("root") && pass.equals("almacen.C12")) {
 			return true;
-		}else if(username.equals("desa") && pass.equals("desa")) {
+		} else if (username.equals("desa") && pass.equals("desa")) {
 			return true;
 		}
 		return UsuarioDB.validar(username, pass);
@@ -74,5 +88,24 @@ public class UsuarioManager {
 		Area a = AreaDB.getAreaByNombre(area);
 		UsuarioDB.editarUsuario(id, r, a, nombre, apellido, email);
 	}
-	
+
+	public List<String> getUsersLikeNombre(String nombre) {
+		List<String> users = new ArrayList<String>();
+
+		if (!StringUtils.hasText(nombre)) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+		}
+
+		try {
+			List<Usuario> usuarios = repo.obtenerLikeNombre(nombre);
+			for (Usuario u : usuarios) {
+				users.add(u.getNombreUsuario());
+			}
+		} catch (NoSuchElementException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+		}
+
+		return users.stream().map(x -> new String(x)).collect(Collectors.toList());
+	}
+
 }
