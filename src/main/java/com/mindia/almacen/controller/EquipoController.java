@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mindia.almacen.JWTAuthorizationFilter;
 import com.mindia.almacen.manager.EquipoManager;
 import com.mindia.almacen.manager.GrupoManager;
-import com.mindia.almacen.manager.RegistroManager.TIPO_REGISTRO;
 import com.mindia.almacen.pojo.EquipoView;
 import com.mindia.almacen.pojo.GrupoEquipoView;
 
@@ -63,6 +62,6 @@ public class EquipoController {
 		@SuppressWarnings("unchecked")
 		String username = (String) authentication.getPrincipal();
 
-		grupoManager.changeStatus(id, entrada, username, null, TIPO_REGISTRO.GRUPO_EQUIPO);
+		grupoManager.changeStatusGrupoEquipo(id, entrada, username);
 	}
 }

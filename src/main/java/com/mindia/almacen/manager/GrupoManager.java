@@ -1,5 +1,8 @@
 package com.mindia.almacen.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,7 @@ import com.mindia.almacen.model.Equipo;
 import com.mindia.almacen.model.GrupoEquipos;
 import com.mindia.almacen.model.GrupoLlaves;
 import com.mindia.almacen.model.Llave;
+import com.mindia.almacen.model.Registro;
 import com.mindia.almacen.model.Usuario;
 import com.mindia.almacen.persistence.GrupoEquipoRepository;
 import com.mindia.almacen.persistence.GrupoLlaveRepository;
@@ -80,28 +84,33 @@ public class GrupoManager {
 		return new GrupoEquipoView(grupoEquipo);
 	}
 
-	public void changeStatus(String id, String entrada, String username, String guardia, TIPO_REGISTRO tipo) {
-		if (tipo == TIPO_REGISTRO.GRUPO_EQUIPO) {
-			GrupoEquipos grupo = grupoEquipoRepo.getOne(Integer.parseInt(id));
-			for (Equipo equipo : grupo.getEquipos()) {
-				equipoManager.changeStatus(username, equipo.getEquipoId());
-			}
-			grupoEquipoRepo.save(grupo);
-		} else if (tipo == TIPO_REGISTRO.GRUPO_LLAVE) {
-			GrupoLlaves grupoLlaves = grupoLlaveRepo.getOne(Integer.parseInt(id));
-			for (Llave llave : grupoLlaves.getLlaves()) {
-				llaveManager.changeLlaveStatus(llave.getLlaveId().toString(), entrada, username, guardia);
-			}
-			grupoLlaveRepo.save(grupoLlaves);
+	public void changeStatusGrupoLlave(String id, String entrada, String username, String guardia) {
+		GrupoLlaves grupoLlaves = grupoLlaveRepo.getOne(Integer.parseInt(id));
+		List<Integer> ids = new ArrayList<Integer>();
+		for (Llave llave : grupoLlaves.getLlaves()) {
+			ids.add(llave.getLlaveId());
+			llaveManager.changeLlaveStatus(llave.getLlaveId().toString(), entrada, username, guardia);
 		}
+		grupoLlaveRepo.save(grupoLlaves);
 		Usuario encargado = UsuarioDB.getUsuarioByNombreUsuario(guardia);
 		int idEntidad = Integer.parseInt(id);
-		int user = UsuarioDB.getUsuarioByNombreUsuario(username).getId();
+		Usuario usuario = null;
 		if (entrada.equals("En uso")) {
-			registroManager.createRegistro(false, user, tipo, idEntidad, encargado);
+			List<Registro> registros = RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.LLAVE, ids);
+			usuario = registros.get(0).getUsuarioByUsuario();
+			registroManager.createRegistro(false, usuario.getId(), TIPO_REGISTRO.GRUPO_LLAVE, idEntidad, encargado);
 		} else {
-			registroManager.createRegistro(true, user, tipo, idEntidad, encargado);
+			usuario = UsuarioDB.getUsuarioByNombreUsuario(username);
+			registroManager.createRegistro(true, usuario.getId(), TIPO_REGISTRO.GRUPO_LLAVE, idEntidad, encargado);
 		}
+	}
+
+	public void changeStatusGrupoEquipo(String id, String entrada, String user) {
+		GrupoEquipos grupo = grupoEquipoRepo.getOne(Integer.parseInt(id));
+		for (Equipo equipo : grupo.getEquipos()) {
+			equipoManager.changeStatus(user, equipo.getEquipoId());
+		}
+		grupoEquipoRepo.save(grupo);
 	}
 
 }
