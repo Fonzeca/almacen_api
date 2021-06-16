@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.mindia</groupId>
 	<artifactId>almacen_api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>almacen_api</name>
 	<description>Almacen endpoints para Android</description>
@@ -72,6 +72,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>almacenapi</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
