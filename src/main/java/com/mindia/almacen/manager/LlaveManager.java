@@ -103,7 +103,7 @@ public class LlaveManager {
 		Integer id = Integer.parseInt(idUser);
 		List<LlaveView> llaveViews = new ArrayList<LlaveView>();
 		List<Llave> llaves = llaveRepo.llavesEnUso();
-		List<Integer> ids = new ArrayList();
+		List<Integer> ids = new ArrayList<Integer>();
 		for (Llave llave : llaves) {
 			ids.add(llave.getLlaveId());
 		}
