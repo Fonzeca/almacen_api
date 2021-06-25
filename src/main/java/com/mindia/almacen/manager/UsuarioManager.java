@@ -75,11 +75,6 @@ public class UsuarioManager {
 	}
 
 	public static boolean validarCredenciales(String username, String pass) {
-		if (username.equals("root") && pass.equals("almacen.C12")) {
-			return true;
-		} else if (username.equals("desa") && pass.equals("desa")) {
-			return true;
-		}
 		return UsuarioDB.validar(username, pass);
 	}
 
@@ -106,6 +101,10 @@ public class UsuarioManager {
 		}
 
 		return users.stream().map(x -> new String(x)).collect(Collectors.toList());
+	}
+
+	public static boolean validarCredencialesSys(String username, String pass) {
+		return UsuarioDB.validarSys(username, pass);
 	}
 
 }

@@ -21,52 +21,54 @@ import com.mindia.almacen.persistence.UsuarioDB;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-
 @RestController
 public class InicioController {
 
 	@PostMapping("/login")
 	public Token login(@RequestParam("username") String username, @RequestParam("password") String pass) {
-		
+
 		Token token = null;
-		
-		if(UsuarioManager.validarCredenciales(username, pass)) {
+		if (username.equals("root") || username.equals("apps") || username.equals("llaves")
+				|| username.equals("tecnica") || username.equals("almacen")) {
+			if (UsuarioManager.validarCredencialesSys(username, pass)) {
+
+				Usuario user = UsuarioDB.getUsuarioByNombreUsuario(username);
+				token = getJWTToken(username, user.getRol().getNombre());
+				System.out.println("\nEl usuario " + user.getNombreUsuario() + " inició sesión desde el sistema.\n");
+
+			} else {
+				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+			}
+		} else if (UsuarioManager.validarCredenciales(username, pass)) {
 			Usuario user = UsuarioDB.getUsuarioByNombreUsuario(username);
 			token = getJWTToken(username, user.getRol().getNombre());
 			System.out.println(user.getRol().getNombre());
-		}else {
+		} else {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		}
-		
+
 		return token;
 	}
-	
+
 	private Token getJWTToken(String username, String rol) {
 		String id = UUID.randomUUID().toString();
-		
-		
+
 		String secretKey = "Huffm4n";
-		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-				.commaSeparatedStringToAuthorityList(rol);
-		
-		String tokenStr = Jwts
-				.builder()
-				.setId(id)
-				.setSubject(username)
+		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(rol);
+
+		String tokenStr = Jwts.builder().setId(id).setSubject(username)
 				.claim("authorities",
-						grantedAuthorities.stream()
-								.map(GrantedAuthority::getAuthority)
-								.collect(Collectors.toList()))
+						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 2678400000l))
-				.signWith(SignatureAlgorithm.HS512,
-						secretKey.getBytes()).compact();
+				.signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
 
 		Token token = new Token();
 		token.setId(id);
-		token.setExpireAt(""+ (System.currentTimeMillis() + 2678400000l));
+		token.setExpireAt("" + (System.currentTimeMillis() + 2678400000l));
 		token.setToken(tokenStr);
-		
+
 		return token;
 	}
 }

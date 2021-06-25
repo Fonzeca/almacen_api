@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import com.mindia.almacen.model.Area;
 import com.mindia.almacen.model.Rol;
 import com.mindia.almacen.model.Usuario;
+import com.mindia.almacen.model.Usuariosys;
 
 public class UsuarioDB {
 
@@ -159,6 +160,31 @@ public class UsuarioDB {
 		} finally {
 			sess.close();
 		}
+	}
+
+	public static boolean validarSys(String username, String pass) {
+		Session sess = null;
+		Usuariosys user = new Usuariosys();
+		try {
+			sess = HibernateUtils.openSession();
+			Query query = sess.createQuery("select u from Usuariosys u where u.username='" + username + "'");
+			if (query.uniqueResult() == null) {
+				System.out.println("El usuario ingresado no es correcto.");
+				return false;
+			} else {
+				user = (Usuariosys) query.getSingleResult();
+				if (user.getPassword().equals(pass)) {
+					System.out.println("El usuario " + username + " se logeó correctamente.");
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+		} finally {
+			sess.close();
+		}
+
 	}
 
 }
