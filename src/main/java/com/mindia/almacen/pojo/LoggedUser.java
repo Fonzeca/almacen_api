@@ -7,7 +7,10 @@ import com.google.gson.annotations.SerializedName;
 
 @Generated("jsonschema2pojo")
 public class LoggedUser {
-
+	
+	@SerializedName("id")
+	@Expose
+	private String id;
 	@SerializedName("nombre")
 	@Expose
 	private String nombre;
@@ -73,6 +76,14 @@ public class LoggedUser {
 
 	public void setRol(String rol) {
 		this.rol = rol;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

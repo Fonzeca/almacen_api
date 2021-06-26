@@ -33,7 +33,7 @@ public class UsuarioManager {
 		return UsuarioDB.getUsersActivos();
 	}
 
-	public static LoggedUser getLoggedUser(String token) {
+	public LoggedUser getLoggedUser(String token) {
 		String prefix = "Bearer ";
 		token = token.replace(prefix, "");
 
@@ -44,6 +44,7 @@ public class UsuarioManager {
 		Usuario usuario = UsuarioDB.getUsuarioByNombreUsuario(userName);
 
 		LoggedUser loggedUser = new LoggedUser();
+		loggedUser.setId(usuario.getId().toString());
 		loggedUser.setApellido(usuario.getApellido());
 		loggedUser.setEmail(usuario.getEmail());
 		loggedUser.setEsAdmin(usuario.getRol().getId() > 1);
