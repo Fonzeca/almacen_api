@@ -74,10 +74,18 @@ public class LlaveManager {
 		}
 
 		llave.setEstado(entrada);
-
+		Usuario user;
 		llaveRepo.save(llave);
-
-		Usuario user = UsuarioDB.getUsuarioByNombreUsuario(userName);
+		if(userName!=null) {
+			user = UsuarioDB.getUsuarioByNombreUsuario(userName);
+			
+		}else {
+			List<Registro> registros;
+			List<Integer>ids=new ArrayList<Integer>();
+			ids.add(llave.getLlaveId());
+			registros=RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.LLAVE,ids);
+			user =registros.get(0).getUsuarioByUsuario();
+		}
 		Usuario encargado = null;
 		if (StringUtils.hasText(guardia)) {
 			encargado = UsuarioDB.getUsuarioByNombreUsuario(guardia);
