@@ -122,7 +122,7 @@ public class UsuarioDB {
 		Usuario user = new Usuario();
 		try {
 			sess = HibernateUtils.openSession();
-			Query query = sess.createQuery("select u from Usuario u where u.nombreusuario='" + username + "'");
+			Query<Usuario> query = sess.createQuery("select u from Usuario u where u.nombreUsuario='" + username + "'");
 			if (query.uniqueResult() == null) {
 				System.out.println("El usuario ingresado no es correcto.");
 				return false;

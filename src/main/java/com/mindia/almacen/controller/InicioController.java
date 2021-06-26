@@ -28,18 +28,12 @@ public class InicioController {
 	public Token login(@RequestParam("username") String username, @RequestParam("password") String pass) {
 
 		Token token = null;
-		if (username.equals("root") || username.equals("apps") || username.equals("llaves")
-				|| username.equals("tecnica") || username.equals("almacen")) {
-			if (UsuarioManager.validarCredencialesSys(username, pass)) {
+		if (UsuarioManager.validarCredencialesSys(username, pass)) {
 
-				Usuario user = UsuarioDB.getUsuarioByNombreUsuario(username);
-				token = getJWTToken(username, user.getRol().getNombre());
-				System.out.println("\nEl usuario " + user.getNombreUsuario() + " inició sesión desde el sistema.\n");
+			Usuario user = UsuarioDB.getUsuarioByNombreUsuario(username);
+			token = getJWTToken(username, user.getRol().getNombre());
+			System.out.println("\nEl usuario " + user.getNombreUsuario() + " inició sesión desde el sistema.\n");
 
-			} else {
-				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-
-			}
 		} else if (UsuarioManager.validarCredenciales(username, pass)) {
 			Usuario user = UsuarioDB.getUsuarioByNombreUsuario(username);
 			token = getJWTToken(username, user.getRol().getNombre());
