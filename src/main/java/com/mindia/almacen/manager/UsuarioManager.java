@@ -92,7 +92,7 @@ public class UsuarioManager {
 		}
 
 		try {
-			List<Usuario> usuarios = repo.obtenerLikeNombre(nombre);
+			List<Usuario> usuarios = repo.obtenerLikeNombreUsuario(nombre);
 			for (Usuario u : usuarios) {
 				users.add(u.getNombreUsuario());
 			}
