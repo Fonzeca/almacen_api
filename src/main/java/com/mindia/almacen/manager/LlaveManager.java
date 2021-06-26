@@ -75,22 +75,24 @@ public class LlaveManager {
 
 		llave.setEstado(entrada);
 		Usuario user;
-		llaveRepo.save(llave);
-		if(userName!=null) {
+		
+		if(StringUtils.hasText(userName)) {
 			user = UsuarioDB.getUsuarioByNombreUsuario(userName);
-			
 		}else {
 			List<Registro> registros;
-			List<Integer>ids=new ArrayList<Integer>();
+			List<Integer> ids = new ArrayList<Integer>();
 			ids.add(llave.getLlaveId());
-			registros=RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.LLAVE,ids);
-			user =registros.get(0).getUsuarioByUsuario();
+			registros = RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.LLAVE,ids);
+			user = registros.get(0).getUsuarioByUsuario();
 		}
+		
+		
 		Usuario encargado = null;
 		if (StringUtils.hasText(guardia)) {
 			encargado = UsuarioDB.getUsuarioByNombreUsuario(guardia);
 		}
 
+		llaveRepo.save(llave);
 		if (entrada.equals("En uso")) {
 			registroManager.createRegistro(false, user.getId(), TIPO_REGISTRO.LLAVE, llave.getLlaveId(), encargado);
 		} else {
