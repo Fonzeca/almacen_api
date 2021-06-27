@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 13/06/2021 16:52:59 by Hibernate Tools 5.2.12.Final
+// Generated 27/06/2021 16:58:56 by Hibernate Tools 5.2.12.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,16 +29,18 @@ public class Equipo implements java.io.Serializable {
 	private String observaciones;
 	private String accesorios;
 	private String estado;
+	private boolean activo;
 
 	public Equipo() {
 	}
 
-	public Equipo(String estado) {
+	public Equipo(String estado, boolean activo) {
 		this.estado = estado;
+		this.activo = activo;
 	}
 
 	public Equipo(GrupoEquipos grupoEquipos, Lugar lugar, Tipo tipo, Usuario usuario, String nombre, String serial,
-			String modelo, String observaciones, String accesorios, String estado) {
+			String modelo, String observaciones, String accesorios, String estado, boolean activo) {
 		this.grupoEquipos = grupoEquipos;
 		this.lugar = lugar;
 		this.tipo = tipo;
@@ -49,6 +51,7 @@ public class Equipo implements java.io.Serializable {
 		this.observaciones = observaciones;
 		this.accesorios = accesorios;
 		this.estado = estado;
+		this.activo = activo;
 	}
 
 	@Id
@@ -155,6 +158,15 @@ public class Equipo implements java.io.Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	@Column(name = "activo", nullable = false)
+	public boolean isActivo() {
+		return this.activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 
 }
