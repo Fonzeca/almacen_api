@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.mindia.almacen.model.Equipo;
+import com.mindia.almacen.model.Usuario;
 
 public class EquipoDB {
 
@@ -86,6 +87,25 @@ public class EquipoDB {
 		try {
 			sess = HibernateUtils.openSession();
 			Query<Equipo> query = sess.createQuery("select e from Equipo e where e.activo=1");
+			lista = query.getResultList();
+			for (Equipo e : lista) {
+				Hibernate.initialize(e.getLugar());
+				Hibernate.initialize(e.getTipo());
+				Hibernate.initialize(e.getUsuario());
+				Hibernate.initialize(e);
+			}
+			return lista;
+		} finally {
+			sess.close();
+		}
+	}
+
+	public static List<Equipo> getListaEquiposByUsuario(Usuario user) {
+		Session sess = null;
+		List<Equipo> lista = new ArrayList<Equipo>();
+		try {
+			sess = HibernateUtils.openSession();
+			Query<Equipo> query = sess.createQuery("select e from Equipo e where e.activo=1 and e.usuario=" + user);
 			lista = query.getResultList();
 			for (Equipo e : lista) {
 				Hibernate.initialize(e.getLugar());

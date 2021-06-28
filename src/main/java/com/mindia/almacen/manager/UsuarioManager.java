@@ -108,4 +108,8 @@ public class UsuarioManager {
 		return UsuarioDB.validarSys(username, pass);
 	}
 
+	public static Usuario getUserByUsername(String username) {
+		return UsuarioDB.getUsuarioByNombreUsuario(username);
+	}
+
 }

@@ -1,6 +1,7 @@
 package com.mindia.almacen.manager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mindia.almacen.manager.RegistroManager.TIPO_REGISTRO;
 import com.mindia.almacen.model.Equipo;
+import com.mindia.almacen.model.Registro;
 import com.mindia.almacen.model.Usuario;
 import com.mindia.almacen.persistence.EquipoDB;
 import com.mindia.almacen.persistence.LugarDB;
@@ -101,5 +103,22 @@ public class EquipoManager {
 		EquipoView equipoView = new EquipoView(equipo);
 
 		return equipoView;
+	}
+
+	public List<EquipoView> listarEquiposPropios(String username) {
+		Usuario user = UsuarioManager.getUserByUsername(username);
+		List<Equipo> equipos = EquipoDB.getListaEquiposByUsuario(user);
+		List<EquipoView> returnEquipos = new ArrayList<EquipoView>();
+		List<Integer> ids = new ArrayList<Integer>();
+		for (Equipo equipo : equipos) {
+			ids.add(equipo.getEquipoId());
+		}
+		List<Registro> registros = RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.EQUIPO, ids);
+		for (int i = 0; i < registros.size(); i++) {
+			if (registros.get(i).getEntrada() == false) {
+				returnEquipos.add(new EquipoView(equipos.get(i)));
+			}
+		}
+		return returnEquipos;
 	}
 }

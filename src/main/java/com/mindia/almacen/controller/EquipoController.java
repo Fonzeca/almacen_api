@@ -33,6 +33,17 @@ public class EquipoController {
 		return EquipoManager.listarEquipos();
 	}
 
+	@GetMapping("/equipo/propios")
+	public List<EquipoView> getEquiposPropios(@RequestHeader("Authorization") String token) {
+		String prefix = "Bearer ";
+		token = token.replace(prefix, "");
+
+		Claims claims = JWTAuthorizationFilter.validateToken(token);
+
+		String username = claims.getSubject();
+		return equipoManager.listarEquiposPropios(username);
+	}
+
 	@GetMapping("/equipo/detalle")
 	public EquipoView getAllDetalleEquipo(@RequestParam("id") int id) {
 		return EquipoManager.getEquipo(id);
