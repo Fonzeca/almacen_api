@@ -3,16 +3,14 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''cd Almacen
-mvn -B -DskipTests clean package'''
+        sh 'mvn -B -DskipTests clean package'
       }
     }
 
     stage('Deploy') {
       steps {
-        sh 'rm -f $ftp_war_path/almacen.war'
-        sh '''cd Almacen/target
-cp almacen.war "$ftp_war_path"'''
+        sh 'rm -f $ftp_war_path/almacenapi.war'
+        sh 'cp target/almacenapi.war "$ftp_war_path"'
         sh '''docker container stop $containerName
 
 docker container rm $containerName'''
@@ -20,7 +18,7 @@ docker container rm $containerName'''
 
 docker build -t $containerName .
 
-docker run -d --name $containerName -p 4455:8080 -p 587:587 $containerName'''
+docker run -d --name $containerName -p 4455:8080 $containerName'''
       }
     }
 
