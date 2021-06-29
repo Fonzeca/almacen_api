@@ -105,7 +105,7 @@ public class EquipoDB {
 		List<Equipo> lista = new ArrayList<Equipo>();
 		try {
 			sess = HibernateUtils.openSession();
-			Query<Equipo> query = sess.createQuery("select e from Equipo e where e.activo=1 and e.usuario=" + user);
+			Query<Equipo> query = sess.createQuery("select e from Equipo e where e.activo=1 and e.usuario=" + user.getId());
 			lista = query.getResultList();
 			for (Equipo e : lista) {
 				Hibernate.initialize(e.getLugar());
