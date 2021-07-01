@@ -31,10 +31,10 @@ public class PedidosController {
 
 		List<Pedido> pedidos = null;
 
-		if (rol.equals("Solicitante")) {
-			pedidos = PedidoManager.getPedidosUser(authentication.getPrincipal().toString());
-		} else {
+		if (rol.equals("SuperAdmin") || rol.equals("Administrador")) {
 			pedidos = PedidoManager.getAllPedidos();
+		} else {
+			pedidos = PedidoManager.getPedidosUser(authentication.getPrincipal().toString());
 		}
 
 		List<PedidoView> views = new ArrayList<PedidoView>();
