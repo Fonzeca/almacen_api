@@ -50,15 +50,14 @@ public class EquipoController {
 	}
 
 	@PutMapping("/equipo/status")
-	public void changeEquipoStatus(@RequestParam int id, @RequestHeader("Authorization") String token) {
+	public void changeEquipoStatus(@RequestParam int id) {
 		String prefix = "Bearer ";
-		token = token.replace(prefix, "");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-		Claims claims = JWTAuthorizationFilter.validateToken(token);
+		@SuppressWarnings("unchecked")
+		String username = (String) authentication.getPrincipal();
 
-		String userName = claims.getSubject();
-
-		equipoManager.changeStatus(userName, id);
+		equipoManager.changeStatus(username, id);
 	}
 
 	@GetMapping("/grupoEquipo")
