@@ -48,7 +48,7 @@ public class InicioController {
 
 	private Token getJWTToken(String username, String rol) {
 		String id = UUID.randomUUID().toString();
-		final int minutos = 10;
+		final int minutos = 60 * 24;
 		Date expiration = new Date(System.currentTimeMillis() + minutos * 60 * 1000);
 
 		String secretKey = "Huffm4n";
