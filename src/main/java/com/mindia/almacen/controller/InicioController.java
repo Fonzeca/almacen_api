@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,8 @@ public class InicioController {
 
 	private Token getJWTToken(String username, String rol) {
 		String id = UUID.randomUUID().toString();
+		final int minutos = 1;
+		Date expiration = new Date(System.currentTimeMillis() + minutos * 60 * 1000);
 
 		String secretKey = "Huffm4n";
 		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(rol);
@@ -54,15 +57,20 @@ public class InicioController {
 		String tokenStr = Jwts.builder().setId(id).setSubject(username)
 				.claim("authorities",
 						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 2678400000l))
+				.setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(expiration)
 				.signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
 
 		Token token = new Token();
 		token.setId(id);
-		token.setExpireAt("" + (System.currentTimeMillis() + 2678400000l));
+		token.setExpireAt("" + expiration);
 		token.setToken(tokenStr);
 
 		return token;
+	}
+
+	@GetMapping("/validate")
+	public boolean validate() {
+		return true;
+
 	}
 }
