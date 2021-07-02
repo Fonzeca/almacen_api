@@ -49,7 +49,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
 			return;
 		}
-		response.setCharacterEncoding("UTF-8");
 	}
 
 	public static Claims validateToken(String jwtToken) {

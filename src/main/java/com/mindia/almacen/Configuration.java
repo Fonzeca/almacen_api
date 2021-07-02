@@ -1,8 +1,11 @@
 package com.mindia.almacen;
 
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,6 +28,13 @@ public class Configuration extends WebSecurityConfigurerAdapter implements WebMv
 		.antMatchers(HttpMethod.POST, "/login").permitAll()
 		.anyRequest().authenticated();
 	}
+	
+	@Bean
+    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+        jsonConverter.setDefaultCharset(StandardCharsets.UTF_8);
+        return jsonConverter;
+    }
 	
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
