@@ -88,14 +88,6 @@ public class EquipoManager {
 		List<Equipo> equipos = EquipoDB.getListaEquipos();
 
 		List<EquipoView> views = equipos.stream().map(x -> new EquipoView(x)).collect(Collectors.toList());
-		List<Integer> ids = new ArrayList<Integer>();
-		for (Equipo equipo : equipos) {
-			ids.add(equipo.getEquipoId());
-		}
-		List<Registro> registros = RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.EQUIPO, ids);
-		for (int index = 0; index < registros.size(); index++) {
-			views.get(index).setUsuario(registros.get(index).getUsuarioByUsuario().getNombreUsuario());
-		}
 
 		return views;
 
@@ -109,6 +101,12 @@ public class EquipoManager {
 	public static EquipoView getEquipo(int id) {
 		Equipo equipo = EquipoDB.getEquipoByID(id);
 		EquipoView equipoView = new EquipoView(equipo);
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(equipo.getEquipoId());
+		List<Registro> registros = RegistroManager.getLastRegistrosByEntidadAndId(TIPO_REGISTRO.EQUIPO, ids);
+		for (int index = 0; index < registros.size(); index++) {
+			equipoView.setUsuario(registros.get(index).getUsuarioByUsuario().getNombreUsuario());
+		}
 
 		return equipoView;
 	}
