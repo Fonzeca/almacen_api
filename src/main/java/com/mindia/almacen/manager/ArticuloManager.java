@@ -39,7 +39,6 @@ public class ArticuloManager {
 
 			articulo.setEstado(art.getEstadoarticulo().getNombreEstado());
 			articulo.setNombre(art.getNombre());
-			articulo.setQr(art.getCodigoQr());
 			articulo.setStock(art.getStock());
 			articulo.setSubcategoria(art.getSubcategoria().getNombre());
 			response.add(articulo);
@@ -123,9 +122,6 @@ public class ArticuloManager {
 		Date date = new Date();
 		articuloNuevo.setFechaAgregado(date);
 
-		String qr = "https://api.qrserver.com/v1/create-qr-code/?data=" + nombre;
-		articuloNuevo.setCodigoQr(qr);
-
 		ArticuloDB.agregarArticuloNuevo(articuloNuevo);
 
 	}
@@ -154,7 +150,6 @@ public class ArticuloManager {
 		ArticuloView view = new ArticuloView();
 		view.setEstado(articulo.getEstadoarticulo().getNombreEstado());
 		view.setNombre(articulo.getNombre());
-		view.setQr(articulo.getCodigoQr());
 		view.setStock(articulo.getStock() + Integer.valueOf(cantidad));
 		view.setSubcategoria(articulo.getSubcategoria().getNombre());
 

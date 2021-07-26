@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 27/06/2021 16:58:56 by Hibernate Tools 5.2.12.Final
+// Generated 26/07/2021 14:34:34 by Hibernate Tools 5.2.12.Final
 
 import java.util.Date;
 import javax.persistence.Column;

@@ -1,5 +1,5 @@
 package com.mindia.almacen.model;
-// Generated 27/06/2021 16:58:56 by Hibernate Tools 5.2.12.Final
+// Generated 26/07/2021 14:34:34 by Hibernate Tools 5.2.12.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,13 +21,19 @@ public class Tipo implements java.io.Serializable {
 
 	private Integer id;
 	private String nombre;
+	private boolean activo;
 	private Set<Equipo> equipos = new HashSet<Equipo>(0);
 
 	public Tipo() {
 	}
 
-	public Tipo(String nombre, Set<Equipo> equipos) {
+	public Tipo(boolean activo) {
+		this.activo = activo;
+	}
+
+	public Tipo(String nombre, boolean activo, Set<Equipo> equipos) {
 		this.nombre = nombre;
+		this.activo = activo;
 		this.equipos = equipos;
 	}
 
@@ -50,6 +56,15 @@ public class Tipo implements java.io.Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	@Column(name = "activo", nullable = false)
+	public boolean isActivo() {
+		return this.activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipo")
